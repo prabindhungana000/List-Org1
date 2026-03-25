@@ -10,14 +10,19 @@
 <style>
 * {box-sizing:border-box;}
 body {margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg,#ffd8a8,#ffb74d); display:flex; justify-content:center; align-items:flex-start; padding-top:max(30px, env(safe-area-inset-top)); padding-right:max(16px, env(safe-area-inset-right)); padding-bottom:max(24px, env(safe-area-inset-bottom)); padding-left:max(16px, env(safe-area-inset-left));}
-.auth-container {background:#fff3e0; padding:30px 24px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.25); text-align:center; width:min(100%, 380px); transition: all 0.3s ease; position:relative;}
+button, input {touch-action:manipulation; -webkit-tap-highlight-color:transparent;}
+.auth-container {background:#fff3e0; padding:30px 24px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.25); text-align:center; width:min(100%, 380px); max-width:380px; transition: all 0.3s ease; position:relative;}
 .auth-container h2 {margin-bottom:20px;color:#bf360c;font-size:26px;font-weight:700;}
 input.authInput {width:100%; padding:12px; margin:8px 0; font-size:16px; border:2px solid #ffa726; border-radius:10px; transition: all 0.3s ease;}
 input.authInput:focus {border-color:#ff6f00; box-shadow:0 0 10px rgba(255,111,0,0.3);}
+.password-wrap {position:relative; width:100%;}
+.password-wrap .authInput {margin:8px 0; padding-right:48px;}
+.toggle-password {position:absolute; right:10px; top:50%; transform:translateY(-50%); border:none; background:none; cursor:pointer; font-size:18px; line-height:1; padding:4px; color:#bf360c;}
+.toggle-password:hover {color:#ff6f00;}
 button.authBtn {width:100%; padding:12px; margin-top:12px; font-size:16px; font-weight:600; border:none; border-radius:10px; background-color:#007bff; color:white; cursor:pointer; transition: transform 0.2s, background 0.2s;}
 button.authBtn:hover {background-color:#0056b3; transform:scale(1.05);}
 .toggleAuth {margin-top:15px; font-size:14px; color:#bf360c; cursor:pointer; text-decoration:underline;}
-#todoApp {display:none; flex-direction:column; align-items:center; width:100%; max-width:520px;}
+#todoApp {display:none; flex-direction:column; align-items:center; width:min(100%, 560px); max-width:560px;}
 .page-title {font-size:30px; font-weight:800; color:#bf360c; margin-bottom:25px; text-align:center; width:100%; text-shadow:2px 2px 5px rgba(0,0,0,0.2);}
 #addListBtn {padding:12px 22px; font-size:16px; border:none; border-radius:10px; background-color:#007bff; color:white; cursor:pointer; margin:15px 0 30px 0; transition: transform 0.2s, background 0.2s;}
 #addListBtn:hover {background-color:#0056b3; transform:scale(1.05);}
@@ -33,11 +38,11 @@ input:disabled {background-color:#f0e0d0;}
 button.add-btn {padding:10px 16px; background-color:#4CAF50; color:white; border:none; cursor:pointer; border-radius:8px; font-weight:600;}
 button.add-btn:hover {background-color:#388e3c; transform:scale(1.05);}
 ul {list-style:none; padding-left:0; margin-top:5px;}
-li {display:flex; justify-content:space-between; align-items:center; background:#ffffff; padding:12px 16px; margin-bottom:8px; border-radius:10px; position:relative; cursor:pointer; transition:border 0.2s;}
+li {display:flex; justify-content:space-between; align-items:center; gap:10px; background:#ffffff; padding:12px 16px; margin-bottom:8px; border-radius:10px; position:relative; cursor:pointer; transition:border 0.2s;}
 li:hover {border:2px solid #ffa726;}
-li span {flex:1; font-size:16px; font-weight:500;}
+li span {flex:1; min-width:0; font-size:16px; font-weight:500; overflow-wrap:anywhere;}
 li.completed span {text-decoration:line-through; text-decoration-thickness:0.12em; text-decoration-color:black;}
-.menu-btn {background:#eee; border:none; font-size:20px; cursor:pointer; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; transition: opacity 0.2s;}
+.menu-btn {background:#eee; border:none; font-size:20px; cursor:pointer; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; flex-shrink:0; transition: opacity 0.2s;}
 li:hover .menu-btn {opacity:1;}
 .options {position:absolute; right:35px; top:50%; transform:translateY(-50%); display:none; flex-direction:column; gap:5px; background:#fff; border-radius:8px; padding:5px;}
 .option-btn {padding:6px 12px; border:none; cursor:pointer; font-size:14px; border-radius:5px;}
@@ -52,15 +57,31 @@ li:hover .menu-btn {opacity:1;}
 
 @media (max-width: 520px) {
   body {padding-top:max(20px, env(safe-area-inset-top));}
-  .auth-container {padding:24px 18px;}
-  .page-title {font-size:24px; margin-bottom:18px;}
-  .title-section {padding-right:28px;}
-  input.titleInput {width:100%;}
+  .auth-container {padding:22px 16px; border-radius:18px; width:100%; max-width:100%;}
+  #todoApp {width:100%;}
+  .page-title {font-size:24px; margin-bottom:18px; line-height:1.2;}
+  #addListBtn, #logoutBtn {width:100%;}
+  .list-container {max-width:none; width:100%; margin:14px 0; padding:18px 14px 20px 14px; border-radius:18px;}
+  .title-section {padding-right:34px;}
+  input.titleInput {width:100%; font-size:16px;}
+  h1.box-title {font-size:20px; padding-right:30px; overflow-wrap:anywhere;}
   .input-section {flex-direction:column;}
   .input-section .add-btn {width:100%;}
-  .list-action-btns {flex-direction:column;}
+  .list-action-btns {flex-direction:column; gap:8px;}
   .list-action-btns button {width:100%;}
-  li {padding:12px 12px;}
+  li {align-items:flex-start; padding:12px 10px;}
+  li span {font-size:15px; padding-top:4px;}
+  .menu-btn {opacity:1; width:36px; height:36px;}
+  .options {right:10px; top:auto; bottom:44px; transform:none; box-shadow:0 8px 20px rgba(0,0,0,0.12);}
+  .refresh-btn {right:8px; top:8px;}
+}
+
+@media (max-width: 360px) {
+  body {padding-right:10px; padding-left:10px;}
+  .auth-container {padding:20px 14px;}
+  .page-title {font-size:22px;}
+  input.authInput, input.todoInput, input.titleInput, button.authBtn, #addListBtn, #logoutBtn {font-size:15px;}
+  .toggle-password {right:8px;}
 }
 </style>
 </head>
@@ -69,7 +90,10 @@ li:hover .menu-btn {opacity:1;}
 <div id="loginForm" class="auth-container">
 <h2>Sign In</h2>
 <input type="text" id="loginUsername" class="authInput" placeholder="Username">
+<div class="password-wrap">
 <input type="password" id="loginPassword" class="authInput" placeholder="Password">
+<button type="button" class="toggle-password" data-target="loginPassword" aria-label="Show password" title="Show password">👁</button>
+</div>
 <button id="loginBtn" class="authBtn">Sign In</button>
 <div id="showSignup" class="toggleAuth">Don't have an account? Sign Up</div>
 </div>
@@ -77,7 +101,10 @@ li:hover .menu-btn {opacity:1;}
 <div id="signupForm" class="auth-container" style="display:none;">
 <h2>Sign Up</h2>
 <input type="text" id="signupUsername" class="authInput" placeholder="Username">
+<div class="password-wrap">
 <input type="password" id="signupPassword" class="authInput" placeholder="Password">
+<button type="button" class="toggle-password" data-target="signupPassword" aria-label="Show password" title="Show password">👁</button>
+</div>
 <button id="signupBtn" class="authBtn">Sign Up</button>
 <div id="showLogin" class="toggleAuth">Already have an account? Sign In</div>
 </div>
@@ -86,7 +113,7 @@ li:hover .menu-btn {opacity:1;}
 <button id="logoutBtn">Logout</button>
 <div class="page-title">Interactive Multi-List Organizer</div>
 <div id="allLists"></div>
-<button id="addListBtn">Add Another List</button>
+<button id="addListBtn">Add a List</button>
 </div>
 
 <script>
@@ -96,8 +123,21 @@ document.getElementById('loginPassword').addEventListener('keypress', e=>{if(e.k
 document.getElementById('loginUsername').addEventListener('keypress', e=>{if(e.key==="Enter")loginBtn.click();});
 document.getElementById('signupPassword').addEventListener('keypress', e=>{if(e.key==="Enter")signupBtn.click();});
 document.getElementById('signupUsername').addEventListener('keypress', e=>{if(e.key==="Enter")signupBtn.click();});
+document.querySelectorAll('.toggle-password').forEach(button=>{
+  button.addEventListener('click', ()=>{
+    const input=document.getElementById(button.dataset.target);
+    const show=input.type==="password";
+    input.type=show ? "text" : "password";
+    button.textContent=show ? "🙈" : "👁";
+    button.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+    button.title=show ? 'Hide password' : 'Show password';
+  });
+});
 
 let currentUser = null;
+let saveTimer = null;
+let saveInFlight = false;
+let saveQueued = false;
 
 // FORM SWITCH
 const loginForm=document.getElementById('loginForm'), signupForm=document.getElementById('signupForm');
@@ -113,6 +153,42 @@ async function apiPost(url, body) {
   const data = await response.json();
   if (!response.ok) throw new Error(data.error || "Request failed");
   return data;
+}
+
+function collectLists(){
+  return Array.from(document.querySelectorAll(".list-container")).map(list=>{
+    const title=list.querySelector("h1")?.textContent||list.querySelector(".titleInput")?.value||"";
+    const todos=Array.from(list.querySelectorAll("li span")).map(s=>s.textContent.split(". ").slice(1).join(". "));
+    return {title,todos};
+  });
+}
+
+async function flushSaveLists(){
+  if(!currentUser || saveInFlight)return;
+  saveInFlight=true;
+  try{
+    await apiPost("/saveLists",{username:currentUser,lists:collectLists()});
+  }catch(err){
+    console.error("Failed to save lists:", err);
+  }finally{
+    saveInFlight=false;
+    if(saveQueued){
+      saveQueued=false;
+      flushSaveLists();
+    }
+  }
+}
+
+function saveLists(){
+  if(!currentUser)return;
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{
+    if(saveInFlight){
+      saveQueued=true;
+      return;
+    }
+    flushSaveLists();
+  },150);
 }
 
 // SIGNUP
@@ -161,7 +237,14 @@ document.getElementById('logoutBtn').onclick=function(){
 function createNewList(existing=[]){
   const allLists=document.getElementById("allLists"); allLists.innerHTML="";
   existing.forEach(d=>buildListFromData(d));
+  updateAddListButtonLabel();
   document.getElementById("addListBtn").onclick=()=>buildListFromData();
+}
+
+function updateAddListButtonLabel(){
+  const addListBtn=document.getElementById("addListBtn");
+  const hasLists=document.querySelectorAll(".list-container").length>0;
+  addListBtn.textContent=hasLists ? "Add Another List" : "Add a List";
 }
 
 // --- FULL buildListFromData FUNCTION ---
@@ -174,6 +257,7 @@ function buildListFromData(data={title:"", todos:[]}){
   <div class="list-action-btns"><button class="keep-btn">Keep the list</button><button class="remove-btn">Remove all the list</button></div>
   <ul class="todoList"></ul>`;
   allLists.appendChild(container);
+  updateAddListButtonLabel();
 
   const titleInput=container.querySelector(".titleInput"),todoInput=container.querySelector(".todoInput"),
   addBtn=container.querySelector(".add-btn"),todoList=container.querySelector(".todoList"),
@@ -232,20 +316,6 @@ function buildListFromData(data={title:"", todos:[]}){
   }
 
   function updateNumbers(){const items=todoList.querySelectorAll("li span");count=0;items.forEach(i=>{count++; const t=i.textContent.split(". ").slice(1).join(". "); i.textContent=count+". "+t;});}
-  async function saveLists(){
-    if(!currentUser)return;
-    const lists=[];
-    document.querySelectorAll(".list-container").forEach(list=>{
-      const title=list.querySelector("h1")?.textContent||list.querySelector(".titleInput")?.value||"";
-      const todos=Array.from(list.querySelectorAll("li span")).map(s=>s.textContent.split(". ").slice(1).join(". "));
-      lists.push({title,todos});
-    });
-    try{
-      await apiPost("/saveLists",{username:currentUser,lists});
-    }catch(err){
-      console.error("Failed to save lists:", err);
-    }
-  }
 }
 </script>
 </body>
