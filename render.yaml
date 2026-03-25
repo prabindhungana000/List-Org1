@@ -4,6 +4,9 @@ services:
     runtime: node
     buildCommand: npm install
     startCommand: npm start
+    disks:
+      - name: todo-data
+        mountPath: /var/data
     envVars:
       - key: DATA_DIR
         value: /var/data
