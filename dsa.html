@@ -3,81 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#ffb74d">
+<meta name="theme-color" content="#3aa6b9">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Login/Signup Organizer</title>
 <style>
 * {box-sizing:border-box;}
-body {margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:linear-gradient(135deg,#ffd8a8,#ffb74d); display:flex; justify-content:center; align-items:flex-start; padding-top:max(30px, env(safe-area-inset-top)); padding-right:max(16px, env(safe-area-inset-right)); padding-bottom:max(24px, env(safe-area-inset-bottom)); padding-left:max(16px, env(safe-area-inset-left));}
+:root {
+  --bg-start:#e0f7f4;
+  --bg-end:#9ad7f0;
+  --panel:#fffaf2;
+  --panel-strong:#fff4e3;
+  --text-strong:#174b63;
+  --accent:#2f7fa3;
+  --accent-dark:#1f5e7d;
+  --accent-soft:#70b9d0;
+  --warm:#ff8a65;
+  --warm-dark:#e76f51;
+  --danger:#d1495b;
+  --danger-dark:#a93344;
+  --success:#2a9d8f;
+  --success-dark:#1f776d;
+  --input-border:#7fc8c2;
+}
+body {margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:linear-gradient(135deg,var(--bg-start),var(--bg-end)); display:flex; justify-content:center; align-items:flex-start; padding-top:max(30px, env(safe-area-inset-top)); padding-right:max(16px, env(safe-area-inset-right)); padding-bottom:max(24px, env(safe-area-inset-bottom)); padding-left:max(16px, env(safe-area-inset-left));}
 button, input {touch-action:manipulation; -webkit-tap-highlight-color:transparent;}
-.auth-container {background:#fff3e0; padding:30px 24px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.25); text-align:center; width:min(100%, 380px); max-width:380px; transition:all 0.3s ease; position:relative;}
-.auth-container h2 {margin-bottom:20px; color:#bf360c; font-size:26px; font-weight:700;}
-input.authInput {width:100%; padding:12px; margin:8px 0; font-size:16px; border:2px solid #ffa726; border-radius:10px; transition:all 0.3s ease;}
-input.authInput:focus {border-color:#ff6f00; box-shadow:0 0 10px rgba(255,111,0,0.3);}
+.auth-container {background:rgba(255,250,242,0.95); padding:30px 24px; border-radius:20px; box-shadow:0 14px 34px rgba(23,75,99,0.18); text-align:center; width:min(100%, 380px); max-width:380px; transition:all 0.3s ease; position:relative; border:1px solid rgba(47,127,163,0.14);}
+.auth-container h2 {margin-bottom:20px; color:var(--text-strong); font-size:26px; font-weight:700;}
+input.authInput {width:100%; padding:12px; margin:8px 0; font-size:16px; border:2px solid var(--input-border); border-radius:10px; transition:all 0.3s ease; background:#ffffff;}
+input.authInput:focus {border-color:var(--accent); box-shadow:0 0 0 4px rgba(47,127,163,0.16); outline:none;}
 .password-wrap {position:relative; width:100%;}
 .password-wrap .authInput {margin:8px 0; padding-right:48px;}
-.toggle-password {position:absolute; right:10px; top:50%; transform:translateY(-50%); border:none; background:none; cursor:pointer; font-size:18px; line-height:1; padding:4px; color:#bf360c;}
-.toggle-password:hover {color:#ff6f00;}
-button.authBtn {width:100%; padding:12px; margin-top:12px; font-size:16px; font-weight:600; border:none; border-radius:10px; background-color:#007bff; color:white; cursor:pointer; transition:transform 0.2s, background 0.2s;}
-button.authBtn:hover {background-color:#0056b3; transform:scale(1.05);}
-.toggleAuth {margin-top:15px; font-size:14px; color:#bf360c; cursor:pointer; text-decoration:underline;}
+.toggle-password {position:absolute; right:10px; top:50%; transform:translateY(-50%); border:none; background:none; cursor:pointer; font-size:18px; line-height:1; padding:4px; color:var(--text-strong);}
+.toggle-password:hover {color:var(--accent);}
+button.authBtn {width:100%; padding:12px; margin-top:12px; font-size:16px; font-weight:600; border:none; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent-soft)); color:white; cursor:pointer; transition:transform 0.2s, filter 0.2s;}
+button.authBtn:hover {filter:brightness(0.95); transform:scale(1.05);}
+.toggleAuth {margin-top:15px; font-size:14px; color:var(--text-strong); cursor:pointer; text-decoration:underline;}
 #todoApp {display:none; flex-direction:column; align-items:center; width:min(100%, 560px); max-width:560px;}
-.page-title {font-size:30px; font-weight:800; color:#bf360c; margin-bottom:25px; text-align:center; width:100%; text-shadow:2px 2px 5px rgba(0,0,0,0.2);}
-#addListBtn {padding:12px 22px; font-size:16px; border:none; border-radius:10px; background-color:#007bff; color:white; cursor:pointer; margin:15px 0 30px 0; transition:transform 0.2s, background 0.2s;}
-#addListBtn:hover {background-color:#0056b3; transform:scale(1.05);}
-#logoutBtn {padding:10px 18px; font-size:16px; font-weight:600; border:none; border-radius:12px; background:#d32f2f; color:white; cursor:pointer; transition:all 0.2s ease; margin-bottom:15px;}
-#logoutBtn:hover {background:#9a0007; transform:scale(1.05);}
-.list-container {width:100%; max-width:440px; background:#fff3e0; padding:20px 20px 25px 20px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); display:flex; flex-direction:column; position:relative; margin:20px 0; transition:border 0.2s, transform 0.25s ease, padding-right 0.25s ease, box-shadow 0.25s ease;}
+.page-title {font-size:30px; font-weight:800; color:var(--text-strong); margin-bottom:25px; text-align:center; width:100%; text-shadow:0 6px 18px rgba(23,75,99,0.16);}
+#addListBtn {padding:12px 22px; font-size:16px; border:none; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent-soft)); color:white; cursor:pointer; margin:15px 0 30px 0; transition:transform 0.2s, filter 0.2s; box-shadow:0 10px 18px rgba(47,127,163,0.2);}
+#addListBtn:hover {filter:brightness(0.95); transform:scale(1.05);}
+#logoutBtn {padding:10px 18px; font-size:16px; font-weight:600; border:none; border-radius:12px; background:linear-gradient(135deg,var(--danger),#ee6c7a); color:white; cursor:pointer; transition:all 0.2s ease; margin-bottom:15px; box-shadow:0 10px 18px rgba(209,73,91,0.2);}
+#logoutBtn:hover {background:linear-gradient(135deg,var(--danger-dark),var(--danger)); transform:scale(1.05);}
+.list-container {width:100%; max-width:440px; background:rgba(255,250,242,0.96); padding:20px 20px 25px 20px; border-radius:20px; box-shadow:0 14px 34px rgba(23,75,99,0.16); display:flex; flex-direction:column; position:relative; margin:20px 0; transition:border 0.2s, transform 0.25s ease, padding-right 0.25s ease, box-shadow 0.25s ease; border:1px solid rgba(47,127,163,0.12);}
 .selection-mode .list-container {transform:translateX(-18px); padding-right:54px;}
-.selection-mode .list-container.selected-for-removal {box-shadow:0 12px 28px rgba(0,0,0,0.28); border:2px solid #bf360c;}
-.list-select-toggle {position:absolute; top:50%; right:14px; transform:translateY(-50%); width:26px; height:26px; border-radius:50%; border:2px solid #222; background:transparent; display:none; align-items:center; justify-content:center; padding:0; cursor:pointer;}
+.selection-mode .list-container.selected-for-removal {box-shadow:0 16px 32px rgba(23,75,99,0.22); border:2px solid var(--warm-dark);}
+.list-select-toggle {position:absolute; top:50%; right:14px; transform:translateY(-50%); width:26px; height:26px; border-radius:50%; border:2px solid #222; background:rgba(255,255,255,0.8); display:none; align-items:center; justify-content:center; padding:0; cursor:pointer;}
 .selection-mode .list-select-toggle {display:flex;}
 .list-select-toggle .inner-dot {width:12px; height:12px; border-radius:50%; background:#111; opacity:0; transition:opacity 0.2s ease;}
 .list-container.selected-for-removal .list-select-toggle .inner-dot {opacity:1;}
 .title-section {display:flex; justify-content:center; margin-bottom:18px;}
-input.titleInput {width:65%; padding:12px; font-size:18px; border:2px solid #ffa726; border-radius:10px; text-align:center; font-weight:500;}
-h1.box-title {text-align:center; font-size:22px; font-weight:700; color:#bf360c; margin-bottom:10px;}
+input.titleInput {width:65%; padding:12px; font-size:18px; border:2px solid var(--input-border); border-radius:10px; text-align:center; font-weight:500; background:#ffffff;}
+h1.box-title {text-align:center; font-size:22px; font-weight:700; color:var(--text-strong); margin-bottom:10px;}
 .input-section {display:flex; gap:8px; margin-bottom:10px;}
-input.todoInput {flex:1; padding:12px; font-size:16px; border:2px solid #ffa726; border-radius:8px; font-weight:500;}
-input:disabled {background-color:#f0e0d0;}
-button.add-btn {padding:10px 16px; background-color:#4CAF50; color:white; border:none; cursor:pointer; border-radius:8px; font-weight:600;}
-button.add-btn:hover {background-color:#388e3c; transform:scale(1.05);}
+input.todoInput {flex:1; padding:12px; font-size:16px; border:2px solid var(--input-border); border-radius:8px; font-weight:500; background:#ffffff;}
+input:disabled {background-color:var(--panel-strong);}
+button.add-btn {padding:10px 16px; background:linear-gradient(135deg,var(--success),#56c9b1); color:white; border:none; cursor:pointer; border-radius:8px; font-weight:600;}
+button.add-btn:hover {background:linear-gradient(135deg,var(--success-dark),var(--success)); transform:scale(1.05);}
 ul {list-style:none; padding-left:0; margin-top:5px;}
 li {display:flex; justify-content:space-between; align-items:center; gap:10px; background:#ffffff; padding:12px 16px; margin-bottom:8px; border-radius:10px; position:relative; cursor:pointer; transition:border 0.2s;}
-li:hover {border:2px solid #ffa726;}
+li:hover {border:2px solid var(--accent-soft);}
 li span {flex:1; min-width:0; font-size:16px; font-weight:500; overflow-wrap:anywhere;}
 li.completed span {text-decoration:line-through; text-decoration-thickness:0.12em; text-decoration-color:black;}
 .menu-btn {background:#eee; border:none; font-size:20px; cursor:pointer; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; flex-shrink:0; transition:opacity 0.2s;}
 li:hover .menu-btn {opacity:1;}
 .options {position:absolute; right:35px; top:50%; transform:translateY(-50%); display:none; flex-direction:column; gap:5px; background:#fff; border-radius:8px; padding:5px;}
 .option-btn {padding:6px 12px; border:none; cursor:pointer; font-size:14px; border-radius:5px;}
-.edit-btn {background:#007bff; color:white;}
-.edit-btn:hover {background:#0056b3;}
-.delete-btn {background:#d32f2f; color:white;}
-.delete-btn:hover {background-color:#9a0007;}
+.edit-btn {background:var(--accent); color:white;}
+.edit-btn:hover {background:var(--accent-dark);}
+.delete-btn {background:var(--danger); color:white;}
+.delete-btn:hover {background-color:var(--danger-dark);}
 .list-action-btns {display:flex; justify-content:center; gap:10px; margin-top:8px; opacity:0;}
 .list-action-btns.show {opacity:1;}
-.keep-btn {background-color:#007bff; color:white;}
-.keep-btn:hover {background-color:#0056b3; transform:scale(1.05);}
-.remove-btn {background-color:#d32f2f; color:white;}
-.remove-btn:hover {background-color:#9a0007;}
+.keep-btn {background:var(--accent); color:white;}
+.keep-btn:hover {background:var(--accent-dark); transform:scale(1.05);}
+.remove-btn {background:var(--danger); color:white;}
+.remove-btn:hover {background-color:var(--danger-dark);}
 .refresh-btn {position:absolute; right:12px; top:12px; border:none; background:none; font-size:20px; cursor:pointer;}
-.refresh-btn:hover {color:#007bff;}
-.selection-toolbar {position:fixed; left:50%; bottom:24px; transform:translateX(-50%); display:none; gap:12px; align-items:center; background:rgba(255,243,224,0.98); padding:12px 14px; border-radius:18px; box-shadow:0 14px 30px rgba(0,0,0,0.18); z-index:20;}
+.refresh-btn:hover {color:var(--accent);}
+.selection-toolbar {position:fixed; left:50%; bottom:24px; transform:translateX(-50%); display:none; gap:12px; align-items:center; background:rgba(255,250,242,0.98); padding:12px 14px; border-radius:18px; box-shadow:0 14px 30px rgba(23,75,99,0.18); z-index:20; border:1px solid rgba(47,127,163,0.12);}
 .selection-toolbar.show {display:flex;}
 .selection-toolbar button {border:none; border-radius:12px; padding:10px 16px; font-size:15px; font-weight:600; cursor:pointer;}
-#removeSelectedBtn {background:#bf360c; color:#fff;}
-#cancelSelectionBtn {background:#fff; color:#bf360c; border:2px solid #bf360c;}
+#removeSelectedBtn {background:var(--warm-dark); color:#fff;}
+#cancelSelectionBtn {background:#fff; color:var(--text-strong); border:2px solid var(--accent);}
 .modal-overlay {position:fixed; inset:0; background:rgba(0,0,0,0.3); display:none; align-items:center; justify-content:center; padding:16px; z-index:30;}
 .modal-overlay.show {display:flex;}
-.confirm-modal {width:min(100%, 360px); background:#fff3e0; border-radius:22px; padding:24px 20px; box-shadow:0 16px 36px rgba(0,0,0,0.25); text-align:center;}
-.confirm-modal h3 {margin:0 0 10px; color:#bf360c; font-size:24px;}
+.confirm-modal {width:min(100%, 360px); background:var(--panel); border-radius:22px; padding:24px 20px; box-shadow:0 16px 36px rgba(23,75,99,0.22); text-align:center;}
+.confirm-modal h3 {margin:0 0 10px; color:var(--text-strong); font-size:24px;}
 .confirm-modal p {margin:0 0 18px; color:#5d4037; font-size:15px; line-height:1.45;}
 .confirm-actions {display:flex; justify-content:center; gap:12px;}
 .confirm-actions button {min-width:110px; border:none; border-radius:12px; padding:12px 0; font-size:16px; font-weight:700; cursor:pointer;}
-#confirmYesBtn {background:#bf360c; color:#fff;}
-#confirmNoBtn {background:#fff; color:#bf360c; border:2px solid #bf360c;}
+#confirmYesBtn {background:var(--warm-dark); color:#fff;}
+#confirmNoBtn {background:#fff; color:var(--text-strong); border:2px solid var(--accent);}
 
 @media (max-width: 520px) {
   body {padding-top:max(20px, env(safe-area-inset-top));}
@@ -389,7 +406,7 @@ function buildListFromData(data = { title: "", todos: [] }) {
   container.innerHTML = `<button class="refresh-btn" type="button">&#x21bb;</button>
   <button class="list-select-toggle" type="button" aria-label="Select list for removal"><span class="inner-dot"></span></button>
   <div class="title-section"><input class="titleInput" placeholder="Enter title..." value="${data.title}"></div>
-  <div class="input-section"><input class="todoInput" placeholder="Enter todo..." disabled><button class="add-btn" type="button" disabled>Add</button></div>
+  <div class="input-section"><input class="todoInput" placeholder="Enter items....." disabled><button class="add-btn" type="button" disabled>Add</button></div>
   <div class="list-action-btns"><button class="keep-btn" type="button">Keep the list</button><button class="remove-btn" type="button">Remove all the list</button></div>
   <ul class="todoList"></ul>`;
   allLists.appendChild(container);
