@@ -56,9 +56,9 @@ button.authBtn:hover {filter:brightness(0.95); transform:scale(1.05);}
 .selection-mode .list-select-toggle {display:flex;}
 .list-select-toggle .inner-dot {width:12px; height:12px; border-radius:50%; background:#111; opacity:0; transition:opacity 0.2s ease;}
 .list-container.selected-for-removal .list-select-toggle .inner-dot {opacity:1;}
-.title-section {display:flex; justify-content:center; align-items:center; margin:16px 0 18px; width:100%; min-height:48px; padding:0;}
+.title-section {display:flex; justify-content:center; align-items:center; margin:18px 0 18px; width:100%; min-height:48px; padding:0 10px;}
 input.titleInput {width:min(100%, 290px); padding:12px 16px; font-size:18px; border:2px solid var(--input-border); border-radius:14px; text-align:center; font-weight:600; color:var(--text-strong); background:linear-gradient(180deg,#ffffff,#f6fffd); box-shadow:0 8px 18px rgba(47,127,163,0.08);}
-h1.box-title {text-align:center; font-size:22px; font-weight:800; color:var(--text-strong); margin:0; width:100%; padding:0 8px; letter-spacing:0.01em; text-wrap:balance;}
+h1.box-title {text-align:center; font-size:22px; font-weight:800; color:var(--text-strong); margin:0; width:100%; padding:0 10px; letter-spacing:0.01em; text-wrap:balance; overflow-wrap:anywhere; word-break:break-word;}
 .input-section {display:flex; gap:8px; margin-bottom:10px;}
 input.todoInput {flex:1; padding:12px; font-size:16px; border:2px solid var(--input-border); border-radius:8px; font-weight:500; background:#ffffff;}
 input:disabled {background-color:var(--panel-strong);}
@@ -84,7 +84,7 @@ li:hover .menu-btn {opacity:1;}
 .keep-btn:hover {background:var(--accent-dark); transform:scale(1.05);}
 .remove-btn {background:var(--danger); color:white;}
 .remove-btn:hover {background-color:var(--danger-dark);}
-.refresh-btn {position:absolute; right:14px; top:12px; width:34px; height:34px; border:none; border-radius:50%; background:rgba(47,127,163,0.08); color:var(--accent-dark); font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s, transform 0.2s;}
+.refresh-btn {position:absolute; right:14px; top:12px; width:28px; height:28px; border:none; border-radius:50%; background:rgba(47,127,163,0.08); color:var(--accent-dark); font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s, transform 0.2s;}
 .refresh-btn:hover {background:rgba(47,127,163,0.16); color:var(--accent); transform:rotate(-20deg);}
 .selection-toolbar {position:fixed; left:50%; bottom:24px; transform:translateX(-50%); display:none; gap:12px; align-items:center; background:rgba(255,250,242,0.98); padding:12px 14px; border-radius:18px; box-shadow:0 14px 30px rgba(23,75,99,0.18); z-index:20; border:1px solid rgba(47,127,163,0.12);}
 .selection-toolbar.show {display:flex;}
@@ -109,7 +109,7 @@ li:hover .menu-btn {opacity:1;}
   .page-title {font-size:24px; margin-bottom:18px; line-height:1.2;}
   #addListBtn, #logoutBtn {width:100%;}
   .list-container {max-width:none; width:100%; margin:14px 0; padding:24px 14px 20px 14px; border-radius:18px;}
-  .title-section {padding:0; min-height:44px; margin:16px 0 16px;}
+  .title-section {padding:0 6px; min-height:44px; margin:18px 0 16px;}
   input.titleInput {width:100%; font-size:16px; padding:11px 14px;}
   h1.box-title {font-size:20px; padding:0 6px; overflow-wrap:anywhere;}
   .input-section {flex-direction:column;}
@@ -120,7 +120,7 @@ li:hover .menu-btn {opacity:1;}
   li span {font-size:15px; padding-top:4px;}
   .menu-btn {opacity:1; width:36px; height:36px;}
   .options {right:10px; top:auto; bottom:44px; transform:none; box-shadow:0 8px 20px rgba(0,0,0,0.12);}
-  .refresh-btn {right:10px; top:10px; width:32px; height:32px; font-size:17px;}
+  .refresh-btn {right:10px; top:10px; width:26px; height:26px; font-size:14px;}
   .selection-mode .list-container {transform:translateX(-12px); padding-right:48px;}
   .list-select-toggle {right:10px; width:24px; height:24px;}
   .list-select-toggle .inner-dot {width:10px; height:10px;}
