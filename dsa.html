@@ -42,6 +42,7 @@ button.authBtn {width:100%; padding:12px; margin-top:12px; font-size:16px; font-
 button.authBtn:hover {filter:brightness(0.95); transform:scale(1.05);}
 .toggleAuth {margin-top:15px; font-size:14px; color:var(--text-strong); cursor:pointer; text-decoration:underline;}
 #todoApp {display:none; flex-direction:column; align-items:center; width:min(100%, 560px); max-width:560px;}
+.auth-screen-title {width:100%; text-align:center; margin:0 0 18px; color:var(--text-strong); font-size:32px; font-weight:800; line-height:1.15; text-shadow:0 6px 18px rgba(23,75,99,0.12);}
 .page-title {font-size:30px; font-weight:800; color:var(--text-strong); margin-bottom:25px; text-align:center; width:100%; text-shadow:0 6px 18px rgba(23,75,99,0.16);}
 #addListBtn {padding:12px 22px; font-size:16px; border:none; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent-soft)); color:white; cursor:pointer; margin:15px 0 30px 0; transition:transform 0.2s, filter 0.2s; box-shadow:0 10px 18px rgba(47,127,163,0.2);}
 #addListBtn:hover {filter:brightness(0.95); transform:scale(1.05);}
@@ -102,6 +103,7 @@ li:hover .menu-btn {opacity:1;}
   body {padding-top:max(20px, env(safe-area-inset-top));}
   .auth-container {padding:22px 16px; border-radius:18px; width:100%; max-width:100%;}
   #todoApp {width:100%;}
+  .auth-screen-title {font-size:26px; margin-bottom:14px;}
   .page-title {font-size:24px; margin-bottom:18px; line-height:1.2;}
   #addListBtn, #logoutBtn {width:100%;}
   .list-container {max-width:none; width:100%; margin:14px 0; padding:18px 14px 20px 14px; border-radius:18px;}
@@ -129,6 +131,7 @@ li:hover .menu-btn {opacity:1;}
 @media (max-width: 360px) {
   body {padding-right:10px; padding-left:10px;}
   .auth-container {padding:20px 14px;}
+  .auth-screen-title {font-size:24px;}
   .page-title {font-size:22px;}
   input.authInput, input.todoInput, input.titleInput, button.authBtn, #addListBtn, #logoutBtn {font-size:15px;}
   .toggle-password {right:8px;}
@@ -137,8 +140,9 @@ li:hover .menu-btn {opacity:1;}
 </head>
 <body>
 
+<div class="auth-screen-title">Interactive Multi-List Organizer</div>
+
 <div id="loginForm" class="auth-container">
-<div class="auth-title">Interactive Multi-List Organizer</div>
 <h2>Sign In</h2>
 <input type="text" id="loginUsername" class="authInput" placeholder="Username">
 <div class="password-wrap">
@@ -150,7 +154,6 @@ li:hover .menu-btn {opacity:1;}
 </div>
 
 <div id="signupForm" class="auth-container" style="display:none;">
-<div class="auth-title">Interactive Multi-List Organizer</div>
 <h2>Sign Up</h2>
 <input type="text" id="signupUsername" class="authInput" placeholder="Username">
 <div class="password-wrap">
