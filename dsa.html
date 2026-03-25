@@ -34,7 +34,8 @@ input.authInput {width:100%; padding:12px; margin:8px 0; font-size:16px; border:
 input.authInput:focus {border-color:var(--accent); box-shadow:0 0 0 4px rgba(47,127,163,0.16); outline:none;}
 .password-wrap {position:relative; width:100%;}
 .password-wrap .authInput {margin:8px 0; padding-right:48px;}
-.toggle-password {position:absolute; right:10px; top:50%; transform:translateY(-50%); border:none; background:none; cursor:pointer; font-size:18px; line-height:1; padding:4px; color:var(--text-strong);}
+.toggle-password {position:absolute; right:10px; top:50%; transform:translateY(-50%); border:none; background:none; cursor:pointer; line-height:1; padding:4px; color:var(--text-strong); display:flex; align-items:center; justify-content:center;}
+.toggle-password svg {width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
 .toggle-password:hover {color:var(--accent);}
 button.authBtn {width:100%; padding:12px; margin-top:12px; font-size:16px; font-weight:600; border:none; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent-soft)); color:white; cursor:pointer; transition:transform 0.2s, filter 0.2s;}
 button.authBtn:hover {filter:brightness(0.95); transform:scale(1.05);}
@@ -140,7 +141,7 @@ li:hover .menu-btn {opacity:1;}
 <input type="text" id="loginUsername" class="authInput" placeholder="Username">
 <div class="password-wrap">
 <input type="password" id="loginPassword" class="authInput" placeholder="Password">
-<button type="button" class="toggle-password" data-target="loginPassword" aria-label="Show password" title="Show password">&#128065;</button>
+<button type="button" class="toggle-password" data-target="loginPassword" aria-label="Show password" title="Show password"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
 </div>
 <button id="loginBtn" class="authBtn">Sign In</button>
 <div id="showSignup" class="toggleAuth">Don't have an account? Sign Up</div>
@@ -151,7 +152,7 @@ li:hover .menu-btn {opacity:1;}
 <input type="text" id="signupUsername" class="authInput" placeholder="Username">
 <div class="password-wrap">
 <input type="password" id="signupPassword" class="authInput" placeholder="Password">
-<button type="button" class="toggle-password" data-target="signupPassword" aria-label="Show password" title="Show password">&#128065;</button>
+<button type="button" class="toggle-password" data-target="signupPassword" aria-label="Show password" title="Show password"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
 </div>
 <button id="signupBtn" class="authBtn">Sign Up</button>
 <div id="showLogin" class="toggleAuth">Already have an account? Sign In</div>
@@ -203,6 +204,8 @@ let selectionMode = false;
 let holdTimer = null;
 
 const LONG_PRESS_MS = 2000;
+const showPasswordIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+const hidePasswordIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3"></circle><path d="M4 4 20 20"></path></svg>';
 
 document.getElementById("loginPassword").addEventListener("keypress", e=>{ if(e.key === "Enter") loginBtn.click(); });
 document.getElementById("loginUsername").addEventListener("keypress", e=>{ if(e.key === "Enter") loginBtn.click(); });
@@ -214,7 +217,7 @@ document.querySelectorAll(".toggle-password").forEach(button=>{
     const input = document.getElementById(button.dataset.target);
     const show = input.type === "password";
     input.type = show ? "text" : "password";
-    button.innerHTML = show ? "&#128584;" : "&#128065;";
+    button.innerHTML = show ? hidePasswordIcon : showPasswordIcon;
     button.setAttribute("aria-label", show ? "Hide password" : "Show password");
     button.title = show ? "Hide password" : "Show password";
   });
