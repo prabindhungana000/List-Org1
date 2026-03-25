@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffb74d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Login/Signup Todo Organizer</title>
+<style>
+* {box-sizing:border-box;}
+body {margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg,#ffd8a8,#ffb74d); display:flex; justify-content:center; align-items:flex-start; padding-top:max(30px, env(safe-area-inset-top)); padding-right:max(16px, env(safe-area-inset-right)); padding-bottom:max(24px, env(safe-area-inset-bottom)); padding-left:max(16px, env(safe-area-inset-left));}
+.auth-container {background:#fff3e0; padding:30px 24px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.25); text-align:center; width:min(100%, 380px); transition: all 0.3s ease; position:relative;}
+.auth-container h2 {margin-bottom:20px;color:#bf360c;font-size:26px;font-weight:700;}
+input.authInput {width:100%; padding:12px; margin:8px 0; font-size:16px; border:2px solid #ffa726; border-radius:10px; transition: all 0.3s ease;}
+input.authInput:focus {border-color:#ff6f00; box-shadow:0 0 10px rgba(255,111,0,0.3);}
+button.authBtn {width:100%; padding:12px; margin-top:12px; font-size:16px; font-weight:600; border:none; border-radius:10px; background-color:#007bff; color:white; cursor:pointer; transition: transform 0.2s, background 0.2s;}
+button.authBtn:hover {background-color:#0056b3; transform:scale(1.05);}
+.toggleAuth {margin-top:15px; font-size:14px; color:#bf360c; cursor:pointer; text-decoration:underline;}
+#todoApp {display:none; flex-direction:column; align-items:center; width:100%; max-width:520px;}
+.page-title {font-size:30px; font-weight:800; color:#bf360c; margin-bottom:25px; text-align:center; width:100%; text-shadow:2px 2px 5px rgba(0,0,0,0.2);}
+#addListBtn {padding:12px 22px; font-size:16px; border:none; border-radius:10px; background-color:#007bff; color:white; cursor:pointer; margin:15px 0 30px 0; transition: transform 0.2s, background 0.2s;}
+#addListBtn:hover {background-color:#0056b3; transform:scale(1.05);}
+#logoutBtn {padding:10px 18px; font-size:16px; font-weight:600; border:none; border-radius:12px; background:#d32f2f; color:white; cursor:pointer; transition: all 0.2s ease; margin-bottom:15px;}
+#logoutBtn:hover {background:#9a0007; transform:scale(1.05);}
+.list-container {width:100%; max-width:440px; background:#fff3e0; padding:20px 20px 25px 20px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); display:flex; flex-direction:column; position:relative; margin:20px 0; transition:border 0.2s;}
+.title-section {display:flex; justify-content:center; margin-bottom:18px;}
+input.titleInput {width:65%; padding:12px; font-size:18px; border:2px solid #ffa726; border-radius:10px; text-align:center; font-weight:500;}
+h1.box-title {text-align:center; font-size:22px; font-weight:700; color:#bf360c; margin-bottom:10px;}
+.input-section {display:flex; gap:8px; margin-bottom:10px;}
+input.todoInput {flex:1; padding:12px; font-size:16px; border:2px solid #ffa726; border-radius:8px; font-weight:500;}
+input:disabled {background-color:#f0e0d0;}
+button.add-btn {padding:10px 16px; background-color:#4CAF50; color:white; border:none; cursor:pointer; border-radius:8px; font-weight:600;}
+button.add-btn:hover {background-color:#388e3c; transform:scale(1.05);}
+ul {list-style:none; padding-left:0; margin-top:5px;}
+li {display:flex; justify-content:space-between; align-items:center; background:#ffffff; padding:12px 16px; margin-bottom:8px; border-radius:10px; position:relative; cursor:pointer; transition:border 0.2s;}
+li:hover {border:2px solid #ffa726;}
+li span {flex:1; font-size:16px; font-weight:500;}
+li.completed span {text-decoration:line-through; text-decoration-thickness:0.12em; text-decoration-color:black;}
+.menu-btn {background:#eee; border:none; font-size:20px; cursor:pointer; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; transition: opacity 0.2s;}
+li:hover .menu-btn {opacity:1;}
+.options {position:absolute; right:35px; top:50%; transform:translateY(-50%); display:none; flex-direction:column; gap:5px; background:#fff; border-radius:8px; padding:5px;}
+.option-btn {padding:6px 12px; border:none; cursor:pointer; font-size:14px; border-radius:5px;}
+.edit-btn {background:#007bff; color:white;} .edit-btn:hover {background:#0056b3;}
+.delete-btn {background:#d32f2f; color:white;} .delete-btn:hover {background-color:#9a0007;}
+.list-action-btns {display:flex; justify-content:center; gap:10px; margin-top:8px; opacity:0;}
+.list-action-btns.show {opacity:1;}
+.keep-btn {background-color:#007bff; color:white;} .keep-btn:hover {background-color:#0056b3; transform:scale(1.05);}
+.remove-btn {background-color:#d32f2f; color:white;} .remove-btn:hover {background-color:#9a0007;}
+.refresh-btn {position:absolute; right:12px; top:12px; border:none; background:none; font-size:20px; cursor:pointer;}
+.refresh-btn:hover {color:#007bff;}
+
+@media (max-width: 520px) {
+  body {padding-top:max(20px, env(safe-area-inset-top));}
+  .auth-container {padding:24px 18px;}
+  .page-title {font-size:24px; margin-bottom:18px;}
+  .title-section {padding-right:28px;}
+  input.titleInput {width:100%;}
+  .input-section {flex-direction:column;}
+  .input-section .add-btn {width:100%;}
+  .list-action-btns {flex-direction:column;}
+  .list-action-btns button {width:100%;}
+  li {padding:12px 12px;}
+}
+</style>
+</head>
+<body>
+
+<div id="loginForm" class="auth-container">
+<h2>Sign In</h2>
+<input type="text" id="loginUsername" class="authInput" placeholder="Username">
+<input type="password" id="loginPassword" class="authInput" placeholder="Password">
+<button id="loginBtn" class="authBtn">Sign In</button>
+<div id="showSignup" class="toggleAuth">Don't have an account? Sign Up</div>
+</div>
+
+<div id="signupForm" class="auth-container" style="display:none;">
+<h2>Sign Up</h2>
+<input type="text" id="signupUsername" class="authInput" placeholder="Username">
+<input type="password" id="signupPassword" class="authInput" placeholder="Password">
+<button id="signupBtn" class="authBtn">Sign Up</button>
+<div id="showLogin" class="toggleAuth">Already have an account? Sign In</div>
+</div>
+
+<div id="todoApp">
+<button id="logoutBtn">Logout</button>
+<div class="page-title">Interactive Multi-List Organizer</div>
+<div id="allLists"></div>
+<button id="addListBtn">Add Another List</button>
+</div>
+
+<script>
+// --- LOGIN/SIGNUP ENTER KEY SUPPORT ---
+const loginBtn = document.getElementById('loginBtn'), signupBtn = document.getElementById('signupBtn');
+document.getElementById('loginPassword').addEventListener('keypress', e=>{if(e.key==="Enter")loginBtn.click();});
+document.getElementById('loginUsername').addEventListener('keypress', e=>{if(e.key==="Enter")loginBtn.click();});
+document.getElementById('signupPassword').addEventListener('keypress', e=>{if(e.key==="Enter")signupBtn.click();});
+document.getElementById('signupUsername').addEventListener('keypress', e=>{if(e.key==="Enter")signupBtn.click();});
+
+let currentUser = null;
+
+// FORM SWITCH
+const loginForm=document.getElementById('loginForm'), signupForm=document.getElementById('signupForm');
+document.getElementById('showSignup').onclick=()=>{loginForm.style.display='none';signupForm.style.display='block';}
+document.getElementById('showLogin').onclick=()=>{signupForm.style.display='none';loginForm.style.display='block';}
+
+async function apiPost(url, body) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || "Request failed");
+  return data;
+}
+
+// SIGNUP
+signupBtn.onclick=async function(){
+  const u=document.getElementById('signupUsername').value.trim();
+  const p=document.getElementById('signupPassword').value.trim();
+  if(!u||!p){alert("Enter username and password");return;}
+  try{
+    await apiPost("/signup",{username:u,password:p});
+    alert("Signup successful! Please login.");
+    document.getElementById('signupUsername').value='';
+    document.getElementById('signupPassword').value='';
+    signupForm.style.display='none';loginForm.style.display='block';
+  }catch(err){
+    alert(err.message);
+  }
+}
+
+// LOGIN
+loginBtn.onclick=async function(){
+  const u=document.getElementById('loginUsername').value.trim();
+  const p=document.getElementById('loginPassword').value.trim();
+  if(!u||!p){alert("Enter username and password");return;}
+  try{
+    const data=await apiPost("/login",{username:u,password:p});
+    currentUser = u;
+    loginForm.style.display='none';
+    signupForm.style.display='none';
+    document.getElementById('todoApp').style.display='flex';
+    createNewList(data.lists || []);
+  }catch(err){
+    alert(err.message);
+  }
+}
+
+// LOGOUT
+document.getElementById('logoutBtn').onclick=function(){
+  currentUser=null;
+  document.getElementById('todoApp').style.display='none';
+  loginForm.style.display='block';
+  document.getElementById('loginUsername').value='';
+  document.getElementById('loginPassword').value='';
+}
+
+// --- TODO APP LOGIC ---
+function createNewList(existing=[]){
+  const allLists=document.getElementById("allLists"); allLists.innerHTML="";
+  existing.forEach(d=>buildListFromData(d));
+  document.getElementById("addListBtn").onclick=()=>buildListFromData();
+}
+
+// --- FULL buildListFromData FUNCTION ---
+function buildListFromData(data={title:"", todos:[]}){
+  const allLists=document.getElementById("allLists");
+  const container=document.createElement("div");container.className="list-container";
+  container.innerHTML=`<button class="refresh-btn">&#x21bb;</button>
+  <div class="title-section"><input class="titleInput" placeholder="Enter title..." value="${data.title}"></div>
+  <div class="input-section"><input class="todoInput" placeholder="Enter todo..." disabled><button class="add-btn" disabled>Add</button></div>
+  <div class="list-action-btns"><button class="keep-btn">Keep the list</button><button class="remove-btn">Remove all the list</button></div>
+  <ul class="todoList"></ul>`;
+  allLists.appendChild(container);
+
+  const titleInput=container.querySelector(".titleInput"),todoInput=container.querySelector(".todoInput"),
+  addBtn=container.querySelector(".add-btn"),todoList=container.querySelector(".todoList"),
+  actionBtns=container.querySelector(".list-action-btns"),refreshBtn=container.querySelector(".refresh-btn");
+
+  let count=0, titleEnterCount=0;
+
+  data.todos.forEach(t=>addTodoItem(t));
+
+  // Title input Enter
+  titleInput.addEventListener("keypress", e=>{
+    if(e.key==="Enter" && titleInput.value.trim()){
+      titleEnterCount++;
+      const h=document.createElement("h1"); h.className="box-title"; h.textContent=titleInput.value;
+      container.querySelector(".title-section").replaceChild(h,titleInput);
+      todoInput.disabled=false; addBtn.disabled=false;
+      if(titleEnterCount>1) actionBtns.classList.add("show");
+      refreshBtn.style.display="block";
+      saveLists();
+    }
+  });
+
+  refreshBtn.onclick=()=>{
+    const input=document.createElement("input");input.className="titleInput";input.placeholder="Enter title...";input.value="";
+    container.querySelector(".title-section").replaceChild(input,container.querySelector("h1"));
+    todoInput.disabled=true; addBtn.disabled=true; actionBtns.classList.remove("show"); todoList.innerHTML=""; count=0; titleEnterCount=0;
+    input.addEventListener("keypress", e=>{
+      if(e.key==="Enter" && input.value.trim()){
+        titleEnterCount++;
+        const h=document.createElement("h1"); h.className="box-title"; h.textContent=input.value;
+        container.querySelector(".title-section").replaceChild(h,input);
+        todoInput.disabled=false; addBtn.disabled=false;
+        if(titleEnterCount>1) actionBtns.classList.add("show");
+        saveLists();
+      }
+    });
+    saveLists();
+  }
+
+  actionBtns.querySelector(".remove-btn").onclick=()=>{todoList.innerHTML=""; count=0; saveLists();}
+  addBtn.onclick=()=>addTodoItem(todoInput.value);
+  todoInput.addEventListener("keypress", e=>{if(e.key==="Enter") addBtn.click();});
+
+  function addTodoItem(text){if(!text.trim())return;count++;
+    const li=document.createElement("li"); const span=document.createElement("span"); span.textContent=count+". "+text;
+    const menuBtn=document.createElement("button");menuBtn.textContent="⋮";menuBtn.className="menu-btn";
+    const optionsDiv=document.createElement("div");optionsDiv.className="options";
+    const editBtn=document.createElement("button");editBtn.textContent="Edit";editBtn.className="option-btn edit-btn";
+    const deleteBtn=document.createElement("button");deleteBtn.textContent="Remove";deleteBtn.className="option-btn delete-btn";
+    optionsDiv.appendChild(editBtn);optionsDiv.appendChild(deleteBtn);
+    menuBtn.onclick=e=>{e.stopPropagation(); optionsDiv.style.display=(optionsDiv.style.display==="flex")?"none":"flex";}
+    editBtn.onclick=e=>{e.stopPropagation(); const input=document.createElement("input"); input.value=span.textContent.split(". ").slice(1).join(". "); li.replaceChild(input,span); input.focus(); input.addEventListener("keypress",ev=>{if(ev.key==="Enter"){span.textContent=count+". "+input.value;li.replaceChild(span,input);saveLists();}}); optionsDiv.style.display="none";}
+    deleteBtn.onclick=e=>{e.stopPropagation(); li.remove(); updateNumbers(); saveLists();}
+    li.addEventListener("click", ()=>{li.classList.toggle("completed");saveLists();});
+    li.appendChild(span); li.appendChild(optionsDiv); li.appendChild(menuBtn); todoList.appendChild(li); todoInput.value=""; saveLists();
+  }
+
+  function updateNumbers(){const items=todoList.querySelectorAll("li span");count=0;items.forEach(i=>{count++; const t=i.textContent.split(". ").slice(1).join(". "); i.textContent=count+". "+t;});}
+  async function saveLists(){
+    if(!currentUser)return;
+    const lists=[];
+    document.querySelectorAll(".list-container").forEach(list=>{
+      const title=list.querySelector("h1")?.textContent||list.querySelector(".titleInput")?.value||"";
+      const todos=Array.from(list.querySelectorAll("li span")).map(s=>s.textContent.split(". ").slice(1).join(". "));
+      lists.push({title,todos});
+    });
+    try{
+      await apiPost("/saveLists",{username:currentUser,lists});
+    }catch(err){
+      console.error("Failed to save lists:", err);
+    }
+  }
+}
+</script>
+</body>
+</html>
