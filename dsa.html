@@ -56,9 +56,9 @@ button.authBtn:hover {filter:brightness(0.95); transform:scale(1.05);}
 .selection-mode .list-select-toggle {display:flex;}
 .list-select-toggle .inner-dot {width:12px; height:12px; border-radius:50%; background:#111; opacity:0; transition:opacity 0.2s ease;}
 .list-container.selected-for-removal .list-select-toggle .inner-dot {opacity:1;}
-.title-section {display:flex; justify-content:center; align-items:center; margin-bottom:18px; width:100%; padding:0 44px 0 0;}
-input.titleInput {width:min(100%, 280px); padding:12px; font-size:18px; border:2px solid var(--input-border); border-radius:10px; text-align:center; font-weight:500; background:#ffffff;}
-h1.box-title {text-align:center; font-size:22px; font-weight:700; color:var(--text-strong); margin-bottom:10px; width:100%; padding:0 44px 0 0;}
+.title-section {position:relative; display:flex; justify-content:center; align-items:center; margin-bottom:18px; width:100%; min-height:48px; padding:0 52px 0 12px;}
+input.titleInput {width:min(100%, 290px); padding:12px 16px; font-size:18px; border:2px solid var(--input-border); border-radius:14px; text-align:center; font-weight:600; color:var(--text-strong); background:linear-gradient(180deg,#ffffff,#f6fffd); box-shadow:0 8px 18px rgba(47,127,163,0.08);}
+h1.box-title {text-align:center; font-size:22px; font-weight:800; color:var(--text-strong); margin:0; width:100%; padding:0 8px; letter-spacing:0.01em; text-wrap:balance;}
 .input-section {display:flex; gap:8px; margin-bottom:10px;}
 input.todoInput {flex:1; padding:12px; font-size:16px; border:2px solid var(--input-border); border-radius:8px; font-weight:500; background:#ffffff;}
 input:disabled {background-color:var(--panel-strong);}
@@ -109,9 +109,9 @@ li:hover .menu-btn {opacity:1;}
   .page-title {font-size:24px; margin-bottom:18px; line-height:1.2;}
   #addListBtn, #logoutBtn {width:100%;}
   .list-container {max-width:none; width:100%; margin:14px 0; padding:48px 14px 20px 14px; border-radius:18px;}
-  .title-section {padding:0;}
-  input.titleInput {width:100%; font-size:16px;}
-  h1.box-title {font-size:20px; padding:0 36px 0 0; overflow-wrap:anywhere;}
+  .title-section {padding:0 42px 0 6px; min-height:44px;}
+  input.titleInput {width:100%; font-size:16px; padding:11px 14px;}
+  h1.box-title {font-size:20px; padding:0 6px; overflow-wrap:anywhere;}
   .input-section {flex-direction:column;}
   .input-section .add-btn {width:100%;}
   .list-action-btns {flex-direction:column; gap:8px;}
