@@ -28,6 +28,8 @@
 }
 body {margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:linear-gradient(135deg,var(--bg-start),var(--bg-end)); display:flex; flex-direction:column; justify-content:flex-start; align-items:center; padding-top:max(30px, env(safe-area-inset-top)); padding-right:max(16px, env(safe-area-inset-right)); padding-bottom:max(24px, env(safe-area-inset-bottom)); padding-left:max(16px, env(safe-area-inset-left));}
 button, input {touch-action:manipulation; -webkit-tap-highlight-color:transparent;}
+.list-container, .list-container * {-webkit-user-select:none; user-select:none; -webkit-touch-callout:none;}
+.titleInput, .todoInput, .authInput {user-select:text; -webkit-user-select:text;}
 .auth-container {background:rgba(255,250,242,0.95); padding:30px 24px; border-radius:20px; box-shadow:0 14px 34px rgba(23,75,99,0.18); text-align:center; width:min(100%, 380px); max-width:380px; transition:all 0.3s ease; position:relative; border:1px solid rgba(47,127,163,0.14);}
 .auth-container h2 {margin-bottom:20px; color:var(--text-strong); font-size:26px; font-weight:700;}
 input.authInput {width:100%; padding:12px; margin:8px 0; font-size:16px; border:2px solid var(--input-border); border-radius:10px; transition:all 0.3s ease; background:#ffffff;}
@@ -67,8 +69,9 @@ li {display:flex; justify-content:space-between; align-items:center; gap:10px; b
 li:hover {border:2px solid var(--accent-soft);}
 li span {flex:1; min-width:0; font-size:16px; font-weight:500; overflow-wrap:anywhere;}
 li.completed span {text-decoration:line-through; text-decoration-thickness:0.12em; text-decoration-color:black;}
-.menu-btn {background:#eee; border:none; font-size:20px; cursor:pointer; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; flex-shrink:0; transition:opacity 0.2s;}
+.menu-btn {background:rgba(23,75,99,0.06); border:none; font-size:18px; cursor:pointer; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; flex-shrink:0; color:var(--text-strong); transition:opacity 0.2s, background 0.2s;}
 li:hover .menu-btn {opacity:1;}
+.menu-btn:hover {background:rgba(23,75,99,0.1);}
 .options {position:absolute; right:35px; top:50%; transform:translateY(-50%); display:none; flex-direction:column; gap:5px; background:#fff; border-radius:8px; padding:5px;}
 .option-btn {padding:6px 12px; border:none; cursor:pointer; font-size:14px; border-radius:5px;}
 .edit-btn {background:var(--accent); color:white;}
@@ -405,6 +408,14 @@ confirmOverlay.addEventListener("click", e=>{
   }
 });
 
+document.addEventListener("click", e=>{
+  if (!e.target.closest(".menu-btn, .options")) {
+    document.querySelectorAll(".options").forEach(menu=>{
+      menu.style.display = "none";
+    });
+  }
+});
+
 function createNewList(existing = []) {
   exitSelectionMode();
   allLists.innerHTML = "";
@@ -446,6 +457,7 @@ function buildListFromData(data = { title: "", todos: [] }) {
   container.addEventListener("pointerdown", e=>{
     if (selectionMode) return;
     if (e.target.closest("button, input, .options")) return;
+    e.preventDefault();
     clearHoldTimer();
     holdTimer = setTimeout(()=>{
       enterSelectionMode(container);
@@ -532,7 +544,7 @@ function buildListFromData(data = { title: "", todos: [] }) {
     const span = document.createElement("span");
     span.textContent = count + ". " + text;
     const menuBtn = document.createElement("button");
-    menuBtn.textContent = "...";
+    menuBtn.innerHTML = "&#8942;";
     menuBtn.className = "menu-btn";
     menuBtn.type = "button";
     const optionsDiv = document.createElement("div");
@@ -549,6 +561,9 @@ function buildListFromData(data = { title: "", todos: [] }) {
     optionsDiv.appendChild(deleteBtn);
     menuBtn.onclick = e=>{
       e.stopPropagation();
+      document.querySelectorAll(".options").forEach(menu=>{
+        if (menu !== optionsDiv) menu.style.display = "none";
+      });
       optionsDiv.style.display = optionsDiv.style.display === "flex" ? "none" : "flex";
     };
     editBtn.onclick = e=>{
