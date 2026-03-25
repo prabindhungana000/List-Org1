@@ -9,26 +9,32 @@
 <title>Login/Signup Organizer</title>
 <style>
 * {box-sizing:border-box;}
-body {margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg,#ffd8a8,#ffb74d); display:flex; justify-content:center; align-items:flex-start; padding-top:max(30px, env(safe-area-inset-top)); padding-right:max(16px, env(safe-area-inset-right)); padding-bottom:max(24px, env(safe-area-inset-bottom)); padding-left:max(16px, env(safe-area-inset-left));}
+body {margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:linear-gradient(135deg,#ffd8a8,#ffb74d); display:flex; justify-content:center; align-items:flex-start; padding-top:max(30px, env(safe-area-inset-top)); padding-right:max(16px, env(safe-area-inset-right)); padding-bottom:max(24px, env(safe-area-inset-bottom)); padding-left:max(16px, env(safe-area-inset-left));}
 button, input {touch-action:manipulation; -webkit-tap-highlight-color:transparent;}
-.auth-container {background:#fff3e0; padding:30px 24px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.25); text-align:center; width:min(100%, 380px); max-width:380px; transition: all 0.3s ease; position:relative;}
-.auth-container h2 {margin-bottom:20px;color:#bf360c;font-size:26px;font-weight:700;}
-input.authInput {width:100%; padding:12px; margin:8px 0; font-size:16px; border:2px solid #ffa726; border-radius:10px; transition: all 0.3s ease;}
+.auth-container {background:#fff3e0; padding:30px 24px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.25); text-align:center; width:min(100%, 380px); max-width:380px; transition:all 0.3s ease; position:relative;}
+.auth-container h2 {margin-bottom:20px; color:#bf360c; font-size:26px; font-weight:700;}
+input.authInput {width:100%; padding:12px; margin:8px 0; font-size:16px; border:2px solid #ffa726; border-radius:10px; transition:all 0.3s ease;}
 input.authInput:focus {border-color:#ff6f00; box-shadow:0 0 10px rgba(255,111,0,0.3);}
 .password-wrap {position:relative; width:100%;}
 .password-wrap .authInput {margin:8px 0; padding-right:48px;}
 .toggle-password {position:absolute; right:10px; top:50%; transform:translateY(-50%); border:none; background:none; cursor:pointer; font-size:18px; line-height:1; padding:4px; color:#bf360c;}
 .toggle-password:hover {color:#ff6f00;}
-button.authBtn {width:100%; padding:12px; margin-top:12px; font-size:16px; font-weight:600; border:none; border-radius:10px; background-color:#007bff; color:white; cursor:pointer; transition: transform 0.2s, background 0.2s;}
+button.authBtn {width:100%; padding:12px; margin-top:12px; font-size:16px; font-weight:600; border:none; border-radius:10px; background-color:#007bff; color:white; cursor:pointer; transition:transform 0.2s, background 0.2s;}
 button.authBtn:hover {background-color:#0056b3; transform:scale(1.05);}
 .toggleAuth {margin-top:15px; font-size:14px; color:#bf360c; cursor:pointer; text-decoration:underline;}
 #todoApp {display:none; flex-direction:column; align-items:center; width:min(100%, 560px); max-width:560px;}
 .page-title {font-size:30px; font-weight:800; color:#bf360c; margin-bottom:25px; text-align:center; width:100%; text-shadow:2px 2px 5px rgba(0,0,0,0.2);}
-#addListBtn {padding:12px 22px; font-size:16px; border:none; border-radius:10px; background-color:#007bff; color:white; cursor:pointer; margin:15px 0 30px 0; transition: transform 0.2s, background 0.2s;}
+#addListBtn {padding:12px 22px; font-size:16px; border:none; border-radius:10px; background-color:#007bff; color:white; cursor:pointer; margin:15px 0 30px 0; transition:transform 0.2s, background 0.2s;}
 #addListBtn:hover {background-color:#0056b3; transform:scale(1.05);}
-#logoutBtn {padding:10px 18px; font-size:16px; font-weight:600; border:none; border-radius:12px; background:#d32f2f; color:white; cursor:pointer; transition: all 0.2s ease; margin-bottom:15px;}
+#logoutBtn {padding:10px 18px; font-size:16px; font-weight:600; border:none; border-radius:12px; background:#d32f2f; color:white; cursor:pointer; transition:all 0.2s ease; margin-bottom:15px;}
 #logoutBtn:hover {background:#9a0007; transform:scale(1.05);}
-.list-container {width:100%; max-width:440px; background:#fff3e0; padding:20px 20px 25px 20px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); display:flex; flex-direction:column; position:relative; margin:20px 0; transition:border 0.2s;}
+.list-container {width:100%; max-width:440px; background:#fff3e0; padding:20px 20px 25px 20px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); display:flex; flex-direction:column; position:relative; margin:20px 0; transition:border 0.2s, transform 0.25s ease, padding-right 0.25s ease, box-shadow 0.25s ease;}
+.selection-mode .list-container {transform:translateX(-18px); padding-right:54px;}
+.selection-mode .list-container.selected-for-removal {box-shadow:0 12px 28px rgba(0,0,0,0.28); border:2px solid #bf360c;}
+.list-select-toggle {position:absolute; top:50%; right:14px; transform:translateY(-50%); width:26px; height:26px; border-radius:50%; border:2px solid #222; background:transparent; display:none; align-items:center; justify-content:center; padding:0; cursor:pointer;}
+.selection-mode .list-select-toggle {display:flex;}
+.list-select-toggle .inner-dot {width:12px; height:12px; border-radius:50%; background:#111; opacity:0; transition:opacity 0.2s ease;}
+.list-container.selected-for-removal .list-select-toggle .inner-dot {opacity:1;}
 .title-section {display:flex; justify-content:center; margin-bottom:18px;}
 input.titleInput {width:65%; padding:12px; font-size:18px; border:2px solid #ffa726; border-radius:10px; text-align:center; font-weight:500;}
 h1.box-title {text-align:center; font-size:22px; font-weight:700; color:#bf360c; margin-bottom:10px;}
@@ -42,18 +48,36 @@ li {display:flex; justify-content:space-between; align-items:center; gap:10px; b
 li:hover {border:2px solid #ffa726;}
 li span {flex:1; min-width:0; font-size:16px; font-weight:500; overflow-wrap:anywhere;}
 li.completed span {text-decoration:line-through; text-decoration-thickness:0.12em; text-decoration-color:black;}
-.menu-btn {background:#eee; border:none; font-size:20px; cursor:pointer; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; flex-shrink:0; transition: opacity 0.2s;}
+.menu-btn {background:#eee; border:none; font-size:20px; cursor:pointer; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; flex-shrink:0; transition:opacity 0.2s;}
 li:hover .menu-btn {opacity:1;}
 .options {position:absolute; right:35px; top:50%; transform:translateY(-50%); display:none; flex-direction:column; gap:5px; background:#fff; border-radius:8px; padding:5px;}
 .option-btn {padding:6px 12px; border:none; cursor:pointer; font-size:14px; border-radius:5px;}
-.edit-btn {background:#007bff; color:white;} .edit-btn:hover {background:#0056b3;}
-.delete-btn {background:#d32f2f; color:white;} .delete-btn:hover {background-color:#9a0007;}
+.edit-btn {background:#007bff; color:white;}
+.edit-btn:hover {background:#0056b3;}
+.delete-btn {background:#d32f2f; color:white;}
+.delete-btn:hover {background-color:#9a0007;}
 .list-action-btns {display:flex; justify-content:center; gap:10px; margin-top:8px; opacity:0;}
 .list-action-btns.show {opacity:1;}
-.keep-btn {background-color:#007bff; color:white;} .keep-btn:hover {background-color:#0056b3; transform:scale(1.05);}
-.remove-btn {background-color:#d32f2f; color:white;} .remove-btn:hover {background-color:#9a0007;}
+.keep-btn {background-color:#007bff; color:white;}
+.keep-btn:hover {background-color:#0056b3; transform:scale(1.05);}
+.remove-btn {background-color:#d32f2f; color:white;}
+.remove-btn:hover {background-color:#9a0007;}
 .refresh-btn {position:absolute; right:12px; top:12px; border:none; background:none; font-size:20px; cursor:pointer;}
 .refresh-btn:hover {color:#007bff;}
+.selection-toolbar {position:fixed; left:50%; bottom:24px; transform:translateX(-50%); display:none; gap:12px; align-items:center; background:rgba(255,243,224,0.98); padding:12px 14px; border-radius:18px; box-shadow:0 14px 30px rgba(0,0,0,0.18); z-index:20;}
+.selection-toolbar.show {display:flex;}
+.selection-toolbar button {border:none; border-radius:12px; padding:10px 16px; font-size:15px; font-weight:600; cursor:pointer;}
+#removeSelectedBtn {background:#bf360c; color:#fff;}
+#cancelSelectionBtn {background:#fff; color:#bf360c; border:2px solid #bf360c;}
+.modal-overlay {position:fixed; inset:0; background:rgba(0,0,0,0.3); display:none; align-items:center; justify-content:center; padding:16px; z-index:30;}
+.modal-overlay.show {display:flex;}
+.confirm-modal {width:min(100%, 360px); background:#fff3e0; border-radius:22px; padding:24px 20px; box-shadow:0 16px 36px rgba(0,0,0,0.25); text-align:center;}
+.confirm-modal h3 {margin:0 0 10px; color:#bf360c; font-size:24px;}
+.confirm-modal p {margin:0 0 18px; color:#5d4037; font-size:15px; line-height:1.45;}
+.confirm-actions {display:flex; justify-content:center; gap:12px;}
+.confirm-actions button {min-width:110px; border:none; border-radius:12px; padding:12px 0; font-size:16px; font-weight:700; cursor:pointer;}
+#confirmYesBtn {background:#bf360c; color:#fff;}
+#confirmNoBtn {background:#fff; color:#bf360c; border:2px solid #bf360c;}
 
 @media (max-width: 520px) {
   body {padding-top:max(20px, env(safe-area-inset-top));}
@@ -74,6 +98,13 @@ li:hover .menu-btn {opacity:1;}
   .menu-btn {opacity:1; width:36px; height:36px;}
   .options {right:10px; top:auto; bottom:44px; transform:none; box-shadow:0 8px 20px rgba(0,0,0,0.12);}
   .refresh-btn {right:8px; top:8px;}
+  .selection-mode .list-container {transform:translateX(-12px); padding-right:48px;}
+  .list-select-toggle {right:10px; width:24px; height:24px;}
+  .list-select-toggle .inner-dot {width:10px; height:10px;}
+  .selection-toolbar {width:calc(100% - 24px); bottom:12px; padding:12px; gap:10px;}
+  .selection-toolbar button {flex:1;}
+  .confirm-modal {padding:22px 16px;}
+  .confirm-actions button {min-width:0; flex:1;}
 }
 
 @media (max-width: 360px) {
@@ -92,7 +123,7 @@ li:hover .menu-btn {opacity:1;}
 <input type="text" id="loginUsername" class="authInput" placeholder="Username">
 <div class="password-wrap">
 <input type="password" id="loginPassword" class="authInput" placeholder="Password">
-<button type="button" class="toggle-password" data-target="loginPassword" aria-label="Show password" title="Show password">👁</button>
+<button type="button" class="toggle-password" data-target="loginPassword" aria-label="Show password" title="Show password">&#128065;</button>
 </div>
 <button id="loginBtn" class="authBtn">Sign In</button>
 <div id="showSignup" class="toggleAuth">Don't have an account? Sign Up</div>
@@ -103,7 +134,7 @@ li:hover .menu-btn {opacity:1;}
 <input type="text" id="signupUsername" class="authInput" placeholder="Username">
 <div class="password-wrap">
 <input type="password" id="signupPassword" class="authInput" placeholder="Password">
-<button type="button" class="toggle-password" data-target="signupPassword" aria-label="Show password" title="Show password">👁</button>
+<button type="button" class="toggle-password" data-target="signupPassword" aria-label="Show password" title="Show password">&#128065;</button>
 </div>
 <button id="signupBtn" class="authBtn">Sign Up</button>
 <div id="showLogin" class="toggleAuth">Already have an account? Sign In</div>
@@ -116,33 +147,71 @@ li:hover .menu-btn {opacity:1;}
 <button id="addListBtn">Add a List</button>
 </div>
 
+<div id="selectionToolbar" class="selection-toolbar">
+<button id="removeSelectedBtn" type="button">Remove Selected</button>
+<button id="cancelSelectionBtn" type="button">Cancel</button>
+</div>
+
+<div id="confirmOverlay" class="modal-overlay">
+<div class="confirm-modal">
+<h3>Remove Lists?</h3>
+<p>Are you sure you want to remove the selected list boxes?</p>
+<div class="confirm-actions">
+<button id="confirmYesBtn" type="button">Yes</button>
+<button id="confirmNoBtn" type="button">No</button>
+</div>
+</div>
+</div>
+
 <script>
-// --- LOGIN/SIGNUP ENTER KEY SUPPORT ---
-const loginBtn = document.getElementById('loginBtn'), signupBtn = document.getElementById('signupBtn');
-document.getElementById('loginPassword').addEventListener('keypress', e=>{if(e.key==="Enter")loginBtn.click();});
-document.getElementById('loginUsername').addEventListener('keypress', e=>{if(e.key==="Enter")loginBtn.click();});
-document.getElementById('signupPassword').addEventListener('keypress', e=>{if(e.key==="Enter")signupBtn.click();});
-document.getElementById('signupUsername').addEventListener('keypress', e=>{if(e.key==="Enter")signupBtn.click();});
-document.querySelectorAll('.toggle-password').forEach(button=>{
-  button.addEventListener('click', ()=>{
-    const input=document.getElementById(button.dataset.target);
-    const show=input.type==="password";
-    input.type=show ? "text" : "password";
-    button.textContent=show ? "🙈" : "👁";
-    button.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
-    button.title=show ? 'Hide password' : 'Show password';
-  });
-});
+const loginBtn = document.getElementById("loginBtn");
+const signupBtn = document.getElementById("signupBtn");
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
+const todoApp = document.getElementById("todoApp");
+const allLists = document.getElementById("allLists");
+const addListBtn = document.getElementById("addListBtn");
+const selectionToolbar = document.getElementById("selectionToolbar");
+const removeSelectedBtn = document.getElementById("removeSelectedBtn");
+const cancelSelectionBtn = document.getElementById("cancelSelectionBtn");
+const confirmOverlay = document.getElementById("confirmOverlay");
+const confirmYesBtn = document.getElementById("confirmYesBtn");
+const confirmNoBtn = document.getElementById("confirmNoBtn");
 
 let currentUser = null;
 let saveTimer = null;
 let saveInFlight = false;
 let saveQueued = false;
+let selectionMode = false;
+let holdTimer = null;
 
-// FORM SWITCH
-const loginForm=document.getElementById('loginForm'), signupForm=document.getElementById('signupForm');
-document.getElementById('showSignup').onclick=()=>{loginForm.style.display='none';signupForm.style.display='block';}
-document.getElementById('showLogin').onclick=()=>{signupForm.style.display='none';loginForm.style.display='block';}
+const LONG_PRESS_MS = 2000;
+
+document.getElementById("loginPassword").addEventListener("keypress", e=>{ if(e.key === "Enter") loginBtn.click(); });
+document.getElementById("loginUsername").addEventListener("keypress", e=>{ if(e.key === "Enter") loginBtn.click(); });
+document.getElementById("signupPassword").addEventListener("keypress", e=>{ if(e.key === "Enter") signupBtn.click(); });
+document.getElementById("signupUsername").addEventListener("keypress", e=>{ if(e.key === "Enter") signupBtn.click(); });
+
+document.querySelectorAll(".toggle-password").forEach(button=>{
+  button.addEventListener("click", ()=>{
+    const input = document.getElementById(button.dataset.target);
+    const show = input.type === "password";
+    input.type = show ? "text" : "password";
+    button.innerHTML = show ? "&#128584;" : "&#128065;";
+    button.setAttribute("aria-label", show ? "Hide password" : "Show password");
+    button.title = show ? "Hide password" : "Show password";
+  });
+});
+
+document.getElementById("showSignup").onclick = ()=>{
+  loginForm.style.display = "none";
+  signupForm.style.display = "block";
+};
+
+document.getElementById("showLogin").onclick = ()=>{
+  signupForm.style.display = "none";
+  loginForm.style.display = "block";
+};
 
 async function apiPost(url, body) {
   const response = await fetch(url, {
@@ -155,167 +224,346 @@ async function apiPost(url, body) {
   return data;
 }
 
-function collectLists(){
+function collectLists() {
   return Array.from(document.querySelectorAll(".list-container")).map(list=>{
-    const title=list.querySelector("h1")?.textContent||list.querySelector(".titleInput")?.value||"";
-    const todos=Array.from(list.querySelectorAll("li span")).map(s=>s.textContent.split(". ").slice(1).join(". "));
-    return {title,todos};
+    const title = list.querySelector("h1")?.textContent || list.querySelector(".titleInput")?.value || "";
+    const todos = Array.from(list.querySelectorAll("li span")).map(span=>span.textContent.split(". ").slice(1).join(". "));
+    return { title, todos };
   });
 }
 
-async function flushSaveLists(){
-  if(!currentUser || saveInFlight)return;
-  saveInFlight=true;
-  try{
-    await apiPost("/saveLists",{username:currentUser,lists:collectLists()});
-  }catch(err){
+async function flushSaveLists() {
+  if (!currentUser || saveInFlight) return;
+  saveInFlight = true;
+  try {
+    await apiPost("/saveLists", { username: currentUser, lists: collectLists() });
+  } catch (err) {
     console.error("Failed to save lists:", err);
-  }finally{
-    saveInFlight=false;
-    if(saveQueued){
-      saveQueued=false;
+  } finally {
+    saveInFlight = false;
+    if (saveQueued) {
+      saveQueued = false;
       flushSaveLists();
     }
   }
 }
 
-function saveLists(){
-  if(!currentUser)return;
+function saveLists() {
+  if (!currentUser) return;
   clearTimeout(saveTimer);
-  saveTimer=setTimeout(()=>{
-    if(saveInFlight){
-      saveQueued=true;
+  saveTimer = setTimeout(()=>{
+    if (saveInFlight) {
+      saveQueued = true;
       return;
     }
     flushSaveLists();
-  },150);
+  }, 150);
 }
 
-// SIGNUP
-signupBtn.onclick=async function(){
-  const u=document.getElementById('signupUsername').value.trim();
-  const p=document.getElementById('signupPassword').value.trim();
-  if(!u||!p){alert("Enter username and password");return;}
-  try{
-    await apiPost("/signup",{username:u,password:p});
-    alert("Signup successful! Please login.");
-    document.getElementById('signupUsername').value='';
-    document.getElementById('signupPassword').value='';
-    signupForm.style.display='none';loginForm.style.display='block';
-  }catch(err){
-    alert(err.message);
+function updateAddListButtonLabel() {
+  const hasLists = document.querySelectorAll(".list-container").length > 0;
+  addListBtn.textContent = hasLists ? "Add Another List" : "Add a List";
+}
+
+function updateSelectionToolbar() {
+  const selectedCount = document.querySelectorAll(".list-container.selected-for-removal").length;
+  selectionToolbar.classList.toggle("show", selectionMode);
+  removeSelectedBtn.disabled = selectedCount === 0;
+  removeSelectedBtn.style.opacity = selectedCount === 0 ? "0.6" : "1";
+  removeSelectedBtn.style.cursor = selectedCount === 0 ? "not-allowed" : "pointer";
+}
+
+function toggleListSelection(container) {
+  container.classList.toggle("selected-for-removal");
+  updateSelectionToolbar();
+}
+
+function enterSelectionMode(initialContainer) {
+  if (selectionMode) return;
+  selectionMode = true;
+  todoApp.classList.add("selection-mode");
+  document.querySelectorAll(".list-container").forEach(container=>{
+    container.classList.remove("selected-for-removal");
+  });
+  if (initialContainer) {
+    initialContainer.classList.add("selected-for-removal");
   }
+  updateSelectionToolbar();
 }
 
-// LOGIN
-loginBtn.onclick=async function(){
-  const u=document.getElementById('loginUsername').value.trim();
-  const p=document.getElementById('loginPassword').value.trim();
-  if(!u||!p){alert("Enter username and password");return;}
-  try{
-    const data=await apiPost("/login",{username:u,password:p});
-    currentUser = u;
-    loginForm.style.display='none';
-    signupForm.style.display='none';
-    document.getElementById('todoApp').style.display='flex';
-    createNewList(data.lists || []);
-  }catch(err){
-    alert(err.message);
-  }
+function exitSelectionMode() {
+  selectionMode = false;
+  clearTimeout(holdTimer);
+  holdTimer = null;
+  todoApp.classList.remove("selection-mode");
+  selectionToolbar.classList.remove("show");
+  confirmOverlay.classList.remove("show");
+  document.querySelectorAll(".list-container").forEach(container=>{
+    container.classList.remove("selected-for-removal");
+  });
+  updateSelectionToolbar();
 }
 
-// LOGOUT
-document.getElementById('logoutBtn').onclick=function(){
-  currentUser=null;
-  document.getElementById('todoApp').style.display='none';
-  loginForm.style.display='block';
-  document.getElementById('loginUsername').value='';
-  document.getElementById('loginPassword').value='';
+function requestRemoveSelectedLists() {
+  if (!selectionMode || !document.querySelector(".list-container.selected-for-removal")) return;
+  confirmOverlay.classList.add("show");
 }
 
-// --- TODO APP LOGIC ---
-function createNewList(existing=[]){
-  const allLists=document.getElementById("allLists"); allLists.innerHTML="";
-  existing.forEach(d=>buildListFromData(d));
+function removeSelectedLists() {
+  const selectedLists = document.querySelectorAll(".list-container.selected-for-removal");
+  selectedLists.forEach(container=>container.remove());
+  confirmOverlay.classList.remove("show");
+  exitSelectionMode();
   updateAddListButtonLabel();
-  document.getElementById("addListBtn").onclick=()=>buildListFromData();
+  saveLists();
 }
 
-function updateAddListButtonLabel(){
-  const addListBtn=document.getElementById("addListBtn");
-  const hasLists=document.querySelectorAll(".list-container").length>0;
-  addListBtn.textContent=hasLists ? "Add Another List" : "Add a List";
+signupBtn.onclick = async function () {
+  const username = document.getElementById("signupUsername").value.trim();
+  const password = document.getElementById("signupPassword").value.trim();
+  if (!username || !password) {
+    alert("Enter username and password");
+    return;
+  }
+  try {
+    await apiPost("/signup", { username, password });
+    alert("Signup successful! Please login.");
+    document.getElementById("signupUsername").value = "";
+    document.getElementById("signupPassword").value = "";
+    signupForm.style.display = "none";
+    loginForm.style.display = "block";
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+loginBtn.onclick = async function () {
+  const username = document.getElementById("loginUsername").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+  if (!username || !password) {
+    alert("Enter username and password");
+    return;
+  }
+  try {
+    const data = await apiPost("/login", { username, password });
+    currentUser = username;
+    loginForm.style.display = "none";
+    signupForm.style.display = "none";
+    todoApp.style.display = "flex";
+    createNewList(data.lists || []);
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+document.getElementById("logoutBtn").onclick = function () {
+  exitSelectionMode();
+  currentUser = null;
+  todoApp.style.display = "none";
+  loginForm.style.display = "block";
+  document.getElementById("loginUsername").value = "";
+  document.getElementById("loginPassword").value = "";
+};
+
+removeSelectedBtn.onclick = ()=>requestRemoveSelectedLists();
+cancelSelectionBtn.onclick = ()=>exitSelectionMode();
+confirmYesBtn.onclick = ()=>removeSelectedLists();
+confirmNoBtn.onclick = ()=>confirmOverlay.classList.remove("show");
+confirmOverlay.addEventListener("click", e=>{
+  if (e.target === confirmOverlay) {
+    confirmOverlay.classList.remove("show");
+  }
+});
+
+function createNewList(existing = []) {
+  exitSelectionMode();
+  allLists.innerHTML = "";
+  existing.forEach(data=>buildListFromData(data));
+  updateAddListButtonLabel();
+  addListBtn.onclick = ()=>buildListFromData();
 }
 
-// --- FULL buildListFromData FUNCTION ---
-function buildListFromData(data={title:"", todos:[]}){
-  const allLists=document.getElementById("allLists");
-  const container=document.createElement("div");container.className="list-container";
-  container.innerHTML=`<button class="refresh-btn">&#x21bb;</button>
+function buildListFromData(data = { title: "", todos: [] }) {
+  const container = document.createElement("div");
+  container.className = "list-container";
+  container.innerHTML = `<button class="refresh-btn" type="button">&#x21bb;</button>
+  <button class="list-select-toggle" type="button" aria-label="Select list for removal"><span class="inner-dot"></span></button>
   <div class="title-section"><input class="titleInput" placeholder="Enter title..." value="${data.title}"></div>
-  <div class="input-section"><input class="todoInput" placeholder="Enter todo..." disabled><button class="add-btn" disabled>Add</button></div>
-  <div class="list-action-btns"><button class="keep-btn">Keep the list</button><button class="remove-btn">Remove all the list</button></div>
+  <div class="input-section"><input class="todoInput" placeholder="Enter todo..." disabled><button class="add-btn" type="button" disabled>Add</button></div>
+  <div class="list-action-btns"><button class="keep-btn" type="button">Keep the list</button><button class="remove-btn" type="button">Remove all the list</button></div>
   <ul class="todoList"></ul>`;
   allLists.appendChild(container);
   updateAddListButtonLabel();
 
-  const titleInput=container.querySelector(".titleInput"),todoInput=container.querySelector(".todoInput"),
-  addBtn=container.querySelector(".add-btn"),todoList=container.querySelector(".todoList"),
-  actionBtns=container.querySelector(".list-action-btns"),refreshBtn=container.querySelector(".refresh-btn");
+  const titleInput = container.querySelector(".titleInput");
+  const todoInput = container.querySelector(".todoInput");
+  const addBtn = container.querySelector(".add-btn");
+  const todoList = container.querySelector(".todoList");
+  const actionBtns = container.querySelector(".list-action-btns");
+  const refreshBtn = container.querySelector(".refresh-btn");
+  const listSelectToggle = container.querySelector(".list-select-toggle");
 
-  let count=0, titleEnterCount=0;
+  let count = 0;
+  let titleEnterCount = 0;
 
-  data.todos.forEach(t=>addTodoItem(t));
+  data.todos.forEach(text=>addTodoItem(text));
 
-  // Title input Enter
+  function clearHoldTimer() {
+    clearTimeout(holdTimer);
+    holdTimer = null;
+  }
+
+  container.addEventListener("pointerdown", e=>{
+    if (selectionMode) return;
+    if (e.target.closest("button, input, .options")) return;
+    clearHoldTimer();
+    holdTimer = setTimeout(()=>{
+      enterSelectionMode(container);
+    }, LONG_PRESS_MS);
+  });
+
+  ["pointerup", "pointerleave", "pointercancel"].forEach(eventName=>{
+    container.addEventListener(eventName, clearHoldTimer);
+  });
+
+  container.addEventListener("click", e=>{
+    if (!selectionMode) return;
+    if (e.target.closest(".refresh-btn, .add-btn, .keep-btn, .remove-btn, .menu-btn, .option-btn, input")) return;
+    e.preventDefault();
+    toggleListSelection(container);
+  });
+
+  listSelectToggle.onclick = e=>{
+    e.stopPropagation();
+    if (!selectionMode) {
+      enterSelectionMode(container);
+      return;
+    }
+    toggleListSelection(container);
+  };
+
   titleInput.addEventListener("keypress", e=>{
-    if(e.key==="Enter" && titleInput.value.trim()){
+    if (e.key === "Enter" && titleInput.value.trim()) {
       titleEnterCount++;
-      const h=document.createElement("h1"); h.className="box-title"; h.textContent=titleInput.value;
-      container.querySelector(".title-section").replaceChild(h,titleInput);
-      todoInput.disabled=false; addBtn.disabled=false;
-      if(titleEnterCount>1) actionBtns.classList.add("show");
-      refreshBtn.style.display="block";
+      const heading = document.createElement("h1");
+      heading.className = "box-title";
+      heading.textContent = titleInput.value;
+      container.querySelector(".title-section").replaceChild(heading, titleInput);
+      todoInput.disabled = false;
+      addBtn.disabled = false;
+      if (titleEnterCount > 1) actionBtns.classList.add("show");
+      refreshBtn.style.display = "block";
       saveLists();
     }
   });
 
-  refreshBtn.onclick=()=>{
-    const input=document.createElement("input");input.className="titleInput";input.placeholder="Enter title...";input.value="";
-    container.querySelector(".title-section").replaceChild(input,container.querySelector("h1"));
-    todoInput.disabled=true; addBtn.disabled=true; actionBtns.classList.remove("show"); todoList.innerHTML=""; count=0; titleEnterCount=0;
-    input.addEventListener("keypress", e=>{
-      if(e.key==="Enter" && input.value.trim()){
+  refreshBtn.onclick = ()=>{
+    if (selectionMode) return;
+    const input = document.createElement("input");
+    input.className = "titleInput";
+    input.placeholder = "Enter title...";
+    input.value = "";
+    container.querySelector(".title-section").replaceChild(input, container.querySelector("h1"));
+    todoInput.disabled = true;
+    addBtn.disabled = true;
+    actionBtns.classList.remove("show");
+    todoList.innerHTML = "";
+    count = 0;
+    titleEnterCount = 0;
+    input.addEventListener("keypress", event=>{
+      if (event.key === "Enter" && input.value.trim()) {
         titleEnterCount++;
-        const h=document.createElement("h1"); h.className="box-title"; h.textContent=input.value;
-        container.querySelector(".title-section").replaceChild(h,input);
-        todoInput.disabled=false; addBtn.disabled=false;
-        if(titleEnterCount>1) actionBtns.classList.add("show");
+        const heading = document.createElement("h1");
+        heading.className = "box-title";
+        heading.textContent = input.value;
+        container.querySelector(".title-section").replaceChild(heading, input);
+        todoInput.disabled = false;
+        addBtn.disabled = false;
+        if (titleEnterCount > 1) actionBtns.classList.add("show");
         saveLists();
       }
     });
     saveLists();
+  };
+
+  actionBtns.querySelector(".remove-btn").onclick = ()=>{
+    todoList.innerHTML = "";
+    count = 0;
+    saveLists();
+  };
+
+  addBtn.onclick = ()=>addTodoItem(todoInput.value);
+  todoInput.addEventListener("keypress", e=>{ if (e.key === "Enter") addBtn.click(); });
+
+  function addTodoItem(text) {
+    if (!text.trim()) return;
+    count++;
+    const li = document.createElement("li");
+    const span = document.createElement("span");
+    span.textContent = count + ". " + text;
+    const menuBtn = document.createElement("button");
+    menuBtn.textContent = "...";
+    menuBtn.className = "menu-btn";
+    menuBtn.type = "button";
+    const optionsDiv = document.createElement("div");
+    optionsDiv.className = "options";
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.className = "option-btn edit-btn";
+    editBtn.type = "button";
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Remove";
+    deleteBtn.className = "option-btn delete-btn";
+    deleteBtn.type = "button";
+    optionsDiv.appendChild(editBtn);
+    optionsDiv.appendChild(deleteBtn);
+    menuBtn.onclick = e=>{
+      e.stopPropagation();
+      optionsDiv.style.display = optionsDiv.style.display === "flex" ? "none" : "flex";
+    };
+    editBtn.onclick = e=>{
+      e.stopPropagation();
+      const input = document.createElement("input");
+      input.value = span.textContent.split(". ").slice(1).join(". ");
+      li.replaceChild(input, span);
+      input.focus();
+      input.addEventListener("keypress", event=>{
+        if (event.key === "Enter") {
+          span.textContent = count + ". " + input.value;
+          li.replaceChild(span, input);
+          saveLists();
+        }
+      });
+      optionsDiv.style.display = "none";
+    };
+    deleteBtn.onclick = e=>{
+      e.stopPropagation();
+      li.remove();
+      updateNumbers();
+      saveLists();
+    };
+    li.addEventListener("click", ()=>{
+      if (selectionMode) return;
+      li.classList.toggle("completed");
+      saveLists();
+    });
+    li.appendChild(span);
+    li.appendChild(optionsDiv);
+    li.appendChild(menuBtn);
+    todoList.appendChild(li);
+    todoInput.value = "";
+    saveLists();
   }
 
-  actionBtns.querySelector(".remove-btn").onclick=()=>{todoList.innerHTML=""; count=0; saveLists();}
-  addBtn.onclick=()=>addTodoItem(todoInput.value);
-  todoInput.addEventListener("keypress", e=>{if(e.key==="Enter") addBtn.click();});
-
-  function addTodoItem(text){if(!text.trim())return;count++;
-    const li=document.createElement("li"); const span=document.createElement("span"); span.textContent=count+". "+text;
-    const menuBtn=document.createElement("button");menuBtn.textContent="⋮";menuBtn.className="menu-btn";
-    const optionsDiv=document.createElement("div");optionsDiv.className="options";
-    const editBtn=document.createElement("button");editBtn.textContent="Edit";editBtn.className="option-btn edit-btn";
-    const deleteBtn=document.createElement("button");deleteBtn.textContent="Remove";deleteBtn.className="option-btn delete-btn";
-    optionsDiv.appendChild(editBtn);optionsDiv.appendChild(deleteBtn);
-    menuBtn.onclick=e=>{e.stopPropagation(); optionsDiv.style.display=(optionsDiv.style.display==="flex")?"none":"flex";}
-    editBtn.onclick=e=>{e.stopPropagation(); const input=document.createElement("input"); input.value=span.textContent.split(". ").slice(1).join(". "); li.replaceChild(input,span); input.focus(); input.addEventListener("keypress",ev=>{if(ev.key==="Enter"){span.textContent=count+". "+input.value;li.replaceChild(span,input);saveLists();}}); optionsDiv.style.display="none";}
-    deleteBtn.onclick=e=>{e.stopPropagation(); li.remove(); updateNumbers(); saveLists();}
-    li.addEventListener("click", ()=>{li.classList.toggle("completed");saveLists();});
-    li.appendChild(span); li.appendChild(optionsDiv); li.appendChild(menuBtn); todoList.appendChild(li); todoInput.value=""; saveLists();
+  function updateNumbers() {
+    const items = todoList.querySelectorAll("li span");
+    count = 0;
+    items.forEach(item=>{
+      count++;
+      const text = item.textContent.split(". ").slice(1).join(". ");
+      item.textContent = count + ". " + text;
+    });
   }
-
-  function updateNumbers(){const items=todoList.querySelectorAll("li span");count=0;items.forEach(i=>{count++; const t=i.textContent.split(". ").slice(1).join(". "); i.textContent=count+". "+t;});}
 }
 </script>
 </body>
