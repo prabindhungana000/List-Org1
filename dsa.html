@@ -29,7 +29,6 @@
 body {margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:linear-gradient(135deg,var(--bg-start),var(--bg-end)); display:flex; justify-content:center; align-items:flex-start; padding-top:max(30px, env(safe-area-inset-top)); padding-right:max(16px, env(safe-area-inset-right)); padding-bottom:max(24px, env(safe-area-inset-bottom)); padding-left:max(16px, env(safe-area-inset-left));}
 button, input {touch-action:manipulation; -webkit-tap-highlight-color:transparent;}
 .auth-container {background:rgba(255,250,242,0.95); padding:30px 24px; border-radius:20px; box-shadow:0 14px 34px rgba(23,75,99,0.18); text-align:center; width:min(100%, 380px); max-width:380px; transition:all 0.3s ease; position:relative; border:1px solid rgba(47,127,163,0.14);}
-.auth-title {margin:0 0 8px; color:var(--text-strong); font-size:28px; font-weight:800; line-height:1.15; text-shadow:0 6px 18px rgba(23,75,99,0.12);}
 .auth-container h2 {margin-bottom:20px; color:var(--text-strong); font-size:26px; font-weight:700;}
 input.authInput {width:100%; padding:12px; margin:8px 0; font-size:16px; border:2px solid var(--input-border); border-radius:10px; transition:all 0.3s ease; background:#ffffff;}
 input.authInput:focus {border-color:var(--accent); box-shadow:0 0 0 4px rgba(47,127,163,0.16); outline:none;}
@@ -42,7 +41,7 @@ button.authBtn {width:100%; padding:12px; margin-top:12px; font-size:16px; font-
 button.authBtn:hover {filter:brightness(0.95); transform:scale(1.05);}
 .toggleAuth {margin-top:15px; font-size:14px; color:var(--text-strong); cursor:pointer; text-decoration:underline;}
 #todoApp {display:none; flex-direction:column; align-items:center; width:min(100%, 560px); max-width:560px;}
-.auth-screen-title {width:100%; text-align:center; margin:0 0 18px; color:var(--text-strong); font-size:32px; font-weight:800; line-height:1.15; text-shadow:0 6px 18px rgba(23,75,99,0.12);}
+.auth-screen-title {width:100%; max-width:560px; margin:0 auto 18px; text-align:center; color:var(--text-strong); font-size:32px; font-weight:800; line-height:1.15; text-shadow:0 6px 18px rgba(23,75,99,0.12);}
 .page-title {font-size:30px; font-weight:800; color:var(--text-strong); margin-bottom:25px; text-align:center; width:100%; text-shadow:0 6px 18px rgba(23,75,99,0.16);}
 #addListBtn {padding:12px 22px; font-size:16px; border:none; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent-soft)); color:white; cursor:pointer; margin:15px 0 30px 0; transition:transform 0.2s, filter 0.2s; box-shadow:0 10px 18px rgba(47,127,163,0.2);}
 #addListBtn:hover {filter:brightness(0.95); transform:scale(1.05);}
@@ -55,9 +54,9 @@ button.authBtn:hover {filter:brightness(0.95); transform:scale(1.05);}
 .selection-mode .list-select-toggle {display:flex;}
 .list-select-toggle .inner-dot {width:12px; height:12px; border-radius:50%; background:#111; opacity:0; transition:opacity 0.2s ease;}
 .list-container.selected-for-removal .list-select-toggle .inner-dot {opacity:1;}
-.title-section {display:flex; justify-content:center; margin-bottom:18px;}
-input.titleInput {width:65%; padding:12px; font-size:18px; border:2px solid var(--input-border); border-radius:10px; text-align:center; font-weight:500; background:#ffffff;}
-h1.box-title {text-align:center; font-size:22px; font-weight:700; color:var(--text-strong); margin-bottom:10px;}
+.title-section {display:flex; justify-content:center; align-items:center; margin-bottom:18px; padding-right:44px;}
+input.titleInput {width:min(100%, 280px); padding:12px; font-size:18px; border:2px solid var(--input-border); border-radius:10px; text-align:center; font-weight:500; background:#ffffff;}
+h1.box-title {text-align:center; font-size:22px; font-weight:700; color:var(--text-strong); margin-bottom:10px; width:100%; padding:0 10px;}
 .input-section {display:flex; gap:8px; margin-bottom:10px;}
 input.todoInput {flex:1; padding:12px; font-size:16px; border:2px solid var(--input-border); border-radius:8px; font-weight:500; background:#ffffff;}
 input:disabled {background-color:var(--panel-strong);}
@@ -106,10 +105,10 @@ li:hover .menu-btn {opacity:1;}
   .auth-screen-title {font-size:26px; margin-bottom:14px;}
   .page-title {font-size:24px; margin-bottom:18px; line-height:1.2;}
   #addListBtn, #logoutBtn {width:100%;}
-  .list-container {max-width:none; width:100%; margin:14px 0; padding:18px 14px 20px 14px; border-radius:18px;}
-  .title-section {padding-right:34px;}
+  .list-container {max-width:none; width:100%; margin:14px 0; padding:48px 14px 20px 14px; border-radius:18px;}
+  .title-section {padding-right:0; padding-left:0;}
   input.titleInput {width:100%; font-size:16px;}
-  h1.box-title {font-size:20px; padding-right:30px; overflow-wrap:anywhere;}
+  h1.box-title {font-size:20px; padding:0 32px 0 0; overflow-wrap:anywhere;}
   .input-section {flex-direction:column;}
   .input-section .add-btn {width:100%;}
   .list-action-btns {flex-direction:column; gap:8px;}
@@ -118,7 +117,7 @@ li:hover .menu-btn {opacity:1;}
   li span {font-size:15px; padding-top:4px;}
   .menu-btn {opacity:1; width:36px; height:36px;}
   .options {right:10px; top:auto; bottom:44px; transform:none; box-shadow:0 8px 20px rgba(0,0,0,0.12);}
-  .refresh-btn {right:8px; top:8px;}
+  .refresh-btn {right:10px; top:10px;}
   .selection-mode .list-container {transform:translateX(-12px); padding-right:48px;}
   .list-select-toggle {right:10px; width:24px; height:24px;}
   .list-select-toggle .inner-dot {width:10px; height:10px;}
@@ -140,7 +139,7 @@ li:hover .menu-btn {opacity:1;}
 </head>
 <body>
 
-<div class="auth-screen-title">Interactive Multi-List Organizer</div>
+<div id="authScreenTitle" class="auth-screen-title">Interactive Multi-List Organizer</div>
 
 <div id="loginForm" class="auth-container">
 <h2>Sign In</h2>
@@ -193,6 +192,7 @@ const signupBtn = document.getElementById("signupBtn");
 const loginForm = document.getElementById("loginForm");
 const signupForm = document.getElementById("signupForm");
 const todoApp = document.getElementById("todoApp");
+const authScreenTitle = document.getElementById("authScreenTitle");
 const allLists = document.getElementById("allLists");
 const addListBtn = document.getElementById("addListBtn");
 const selectionToolbar = document.getElementById("selectionToolbar");
@@ -373,6 +373,7 @@ loginBtn.onclick = async function () {
   try {
     const data = await apiPost("/login", { username, password });
     currentUser = username;
+    authScreenTitle.style.display = "none";
     loginForm.style.display = "none";
     signupForm.style.display = "none";
     todoApp.style.display = "flex";
@@ -386,6 +387,7 @@ document.getElementById("logoutBtn").onclick = function () {
   exitSelectionMode();
   currentUser = null;
   todoApp.style.display = "none";
+  authScreenTitle.style.display = "block";
   loginForm.style.display = "block";
   document.getElementById("loginUsername").value = "";
   document.getElementById("loginPassword").value = "";
