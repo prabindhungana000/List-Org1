@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#3aa6b9">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>Login/Signup Organizer</title>
+<title>Task/List Organizer</title>
 <style>
 * {box-sizing:border-box;}
 :root {
@@ -29,6 +29,7 @@
 body {margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:linear-gradient(135deg,var(--bg-start),var(--bg-end)); display:flex; justify-content:center; align-items:flex-start; padding-top:max(30px, env(safe-area-inset-top)); padding-right:max(16px, env(safe-area-inset-right)); padding-bottom:max(24px, env(safe-area-inset-bottom)); padding-left:max(16px, env(safe-area-inset-left));}
 button, input {touch-action:manipulation; -webkit-tap-highlight-color:transparent;}
 .auth-container {background:rgba(255,250,242,0.95); padding:30px 24px; border-radius:20px; box-shadow:0 14px 34px rgba(23,75,99,0.18); text-align:center; width:min(100%, 380px); max-width:380px; transition:all 0.3s ease; position:relative; border:1px solid rgba(47,127,163,0.14);}
+.auth-title {margin:0 0 8px; color:var(--text-strong); font-size:28px; font-weight:800; line-height:1.15; text-shadow:0 6px 18px rgba(23,75,99,0.12);}
 .auth-container h2 {margin-bottom:20px; color:var(--text-strong); font-size:26px; font-weight:700;}
 input.authInput {width:100%; padding:12px; margin:8px 0; font-size:16px; border:2px solid var(--input-border); border-radius:10px; transition:all 0.3s ease; background:#ffffff;}
 input.authInput:focus {border-color:var(--accent); box-shadow:0 0 0 4px rgba(47,127,163,0.16); outline:none;}
@@ -137,6 +138,7 @@ li:hover .menu-btn {opacity:1;}
 <body>
 
 <div id="loginForm" class="auth-container">
+<div class="auth-title">Interactive Multi-List Organizer</div>
 <h2>Sign In</h2>
 <input type="text" id="loginUsername" class="authInput" placeholder="Username">
 <div class="password-wrap">
@@ -148,6 +150,7 @@ li:hover .menu-btn {opacity:1;}
 </div>
 
 <div id="signupForm" class="auth-container" style="display:none;">
+<div class="auth-title">Interactive Multi-List Organizer</div>
 <h2>Sign Up</h2>
 <input type="text" id="signupUsername" class="authInput" placeholder="Username">
 <div class="password-wrap">
