@@ -49,6 +49,14 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dsa.html'));
 });
 
+// Temporary debug route to inspect deployed file data
+app.get('/debug-users', (req, res) => {
+    res.json({
+        dataFile,
+        users
+    });
+});
+
 // Signup route
 app.post('/signup', (req, res) => {
     const { username, password } = req.body;
